@@ -13,7 +13,7 @@ from django.contrib.auth.views import *
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
 from django.contrib import admin
-# admin.autodiscover()
+admin.autodiscover()
 
 urlpatterns = [
     # Examples:
