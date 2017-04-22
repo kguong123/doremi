@@ -3,43 +3,39 @@ Definition of urls for DjangoApp.
 """
 
 from datetime import datetime
-from django.conf.urls import url
-from app.forms import BootstrapAuthenticationForm
-from app.views import *
-from app.models import *
-from django.contrib.auth.views import *
+from .forms import BootstrapAuthenticationForm
+from .views import HomeView
+from .views import UserCreateView, UserCreateDoneTV
 
-
-# Uncomment the next lines to enable the admin:
-from django.conf.urls import include
+from django.conf.urls import include, url
 from django.contrib import admin
 admin.autodiscover()
+
+from django.conf.urls.static import static
+from django.conf import settings
+
+# Uncomment the next lines to enable the admin:
+
+
 
 urlpatterns = [
     # Examples:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', home, name='home'),
-    url(r'^contact$', contact, name='contact'),
-    url(r'^honeytip', honeytip, name='honeytip'),
-    url(r'^delivery', delivery, name='delivery'),
-    url(r'^recipe', recipe, name='recipe'),
-    url(r'^randomcooking', randomcooking, name='randomcooking'),
-    url(r'^about', about, name='about'),
-   url(r'^login/$', login, {
-            'template_name': 'app/login.html',
-            'authentication_form': BootstrapAuthenticationForm,
-            'extra_context':
-            {
-                'title':'Log in',
-                'year':datetime.now().year,
-            }
-        },
-        name='login'),
-       url(r'^logout$', logout, {  'next_page': '/'  },        name='logout')
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^accounts/register/$', UserCreateView.as_view(), name='register'),
+    url(r'^accounts/register/done/$', UserCreateDoneTV.as_view(), name='register_done'),
+    url(r'^$', HomeView.as_view(), name='home'),
+    
+    url(r'^recipe/', include('recipe.urls', namespace='recipe')),
+    url(r'^honeytip/', include('honeytip.urls', namespace='honeytip')),
+    url(r'^delivery/', include('delivery.urls', namespace='delivery')),
+    url(r'^randomcooking/', include('randomcooking.urls', namespace='randomcooking')),
 
+    # after remove
+    
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-]
+]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
