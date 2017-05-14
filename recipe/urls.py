@@ -18,5 +18,8 @@ from django.contrib import admin
 from recipe.views import *
 
 urlpatterns = [
-    url(r'^$', Recipe.as_view(), name='index'),
+    url(r'^$', RecipeLV.as_view(), name='index'),
+    url(r'^add/$', RecipeCV.as_view(), name='add'),
+    url(r'^(?P<slug>[-\w]+)/$', RecipeDV.as_view(), name='recipe_detail'),
+    
 ]
