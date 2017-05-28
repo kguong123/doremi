@@ -6,6 +6,8 @@
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
 
+
+
 <style>
   #comments {
     float:right;
@@ -45,6 +47,11 @@
     position: fixed;
     top: 0;
   }
+
+  .borderless td, .borderless th {
+    border: none;
+  }
+
 </style>
 
 <script src="./jquery-1.4.3.min.js"></script>
@@ -105,9 +112,11 @@
         <div class="row">
           <div class="col-md-12">       
             {% for recipeinfo in object.recipeinfo_set.all %}
-              <img class="center-block img-fluid d-block" src="{{ recipeinfo.image.url }}" style = "max-width: 100%; height: auto;">
+              <img class="center-block img-fluid d-block" src="{{ recipeinfo.image.url }}" style = "width: 100%; height: auto;">
               <br>
-              <h6 class="lead">{{ recipeinfo.description}}</h6>
+              <h4>{{ recipeinfo.description}}</h4>
+              <br>
+              <br>
             {% endfor %}
           </div>
         </div>
@@ -116,16 +125,54 @@
       
       <div class="col-md-4">
         <div id="comment">
-          <div class="card-block">
-            <h3 class="card-title">{{ object.foodname }}</h3>
-            <p class="lead">{{ object.title }} </p>
-            <h6 class="card-subtitle text-muted">{{ object.owner }}</h6>
-            <p class="card-text p-y-1">{{ object.Servings }} 인분, {{ object.cookingtime }} 분 소요</p>
-            <a href="#" class="card-link">link</a>
-            <a href="#" class="card-link">Second link</a>
+          <div class="card-block" style="word-break:break-all; word-wrap:break-word;">
+            <h3 class="card-title">{{ object.title }}</h3>
+            <p class="lead">{{ object.foodname }} </p>
+            <img style="width:250px;height:250px" src="{{ object.titleimage.thumb_url }}" />
+            <div class="table-responsive">          
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td width="50">{% load staticfiles %}
+                      <img src="{% static 'img/glyphicons-4-user.png' %}" style="width: 20px; height: 20px">
+                    </td>
+                    <td>작성자</td>
+                    <td>{{ object.owner }}</td>
+                  </tr>
+                  <tr>
+                    <td width="50">{% load staticfiles %}
+                      <img src="{% static 'img/glyphicons-55-clock.png' %}" style="width: 20px; height: 20px">
+                    </td>
+                    <td>조리시간</td>
+                    <td>{{ object.cookingtime }} 분 소요</td>
+                  </tr>
+                  <tr>
+                    <td width="50">{% load staticfiles %}
+                      <img src="{% static 'img/glyphicons-52-eye-open.png' %}" style="width: 20px; height: 15px">
+                    </td>
+                    <td>조회수</td>
+                    <td>{{ object.viewcount }}</td>
+                  </tr>
+                  <tr>
+                    <td width="50">{% load staticfiles %}
+                      <img src="{% static 'img/glyphicons-20-heart-empty.png' %}" style="width: 20px; height: 20px">
+                    </td>
+                    <td>스크랩수</td>
+                    <td>{{ object.scraps }}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+          <center>
+            <a href="{% url 'recipe:delete' recipe.slug %}" class="btn btn-primary" role="button">Delete</a>
+            <a href="#" class="btn btn-default" role="button">Update</a>
+          </center>   
+
           </div>
             <hr class="">
-            <h3 class="card-title">재료리스트 <small>- 1인기준</small> </h3>
+            <h3 class="card-title">재료리스트 <small>- {{ object.servings }} 인기준</small> </h3>
             <ul class="list-group">
               {% for foodinfo in object.foodinfo_set.all %}
               <li class="list-group-item">{{ foodinfo.ingredient}} {{ foodinfo.quantity}} </li>
@@ -133,6 +180,8 @@
             </ul>
         </div>
       </div> 
+
+
     </div>
   </div>
 </div>

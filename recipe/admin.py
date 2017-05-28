@@ -16,6 +16,7 @@ class RecipeInline(admin.StackedInline):
 class RecipeAdmin(admin.ModelAdmin):
     inlines = [RecipeInline, FoodInline]
     list_display = ('title', 'foodname')
+    prepopulated_fields = {'slug': ('title',)}
 
 
 admin.site.register(Recipe, RecipeAdmin)

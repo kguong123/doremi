@@ -16,11 +16,53 @@ from django.db.models import Q
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from DjangoApp.views import LoginRequiredMixin
+from django.shortcuts import redirect
+from .forms import *
+from .models import HoneyTip, Contents
 
 
 # Create your views here.
 
 
-class Honeytip(TemplateView) :
-    template_name = 'templates/honeytip.html'
+class HoneyTipLV(ListView) :
+    model = HoneyTip
+    template_name = 'honeytip/honeytip_all.html'
+    context_object_name = 'honeytips'
+    paginate_by = 8
 
+class HoneyTipDV(DetailView) :
+    model = HoneyTip
+
+
+class HoneyTipCV(LoginRequiredMixin, CreateView):
+    model = HoneyTip
+    fields = ['title', 'slug','titleimage', 'viewcount','scraps', 'owner']
+    initial = {'slug': 'auto-filling-do-not-input'}
+    template_name = 'honeytip/honeytip_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HoneyTipCV, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['formset'] = HoneyTipInlineFormSet(self.request.POST, self.request.FILES)
+        else:
+            context['formset'] = HoneyTipInlineFormSet()
+        return context
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        context = self.get_context_data()
+        formset = context['formset']
+        for photoform in formset:
+            photoform.instance.owner = self.request.user
+        if formset.is_valid():
+            self.object = form.save()
+            formset.instance = self.object
+            formset.save()
+            return redirect('honeytip/honeytip_all.html', pk=self.object.id)
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+
+class HoneyTipDeleteView(LoginRequiredMixin, DeleteView) :
+    model = HoneyTip
+    success_url = reverse_lazy('honeytip:index')

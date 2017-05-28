@@ -13,11 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-
 from django.conf.urls import url
 from django.contrib import admin
 from honeytip.views import *
 
 urlpatterns = [
-    url(r'^$', Honeytip.as_view(), name='index'),
+    url(r'^$', HoneyTipLV.as_view(), name='index'),
+    url(r'^add/$', HoneyTipCV.as_view(), name='add'),
+    url(r'^(?P<slug>[-\w]+)/$', HoneyTipDV.as_view(), name='honeytip_detail'),
+    url(r'^(?P<pk>[0-9]+)/delete/$',HoneyTipDeleteView.as_view(), name="delete"),
+    
 ]

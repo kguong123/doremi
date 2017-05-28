@@ -10,10 +10,10 @@ from django.utils.text import slugify
 # Create your models here.
 @python_2_unicode_compatible
 class Recipe(models.Model):
-    title = models.CharField('레시피 설명',max_length=200)
+    title = models.CharField('레시피 설명',max_length=50)
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True, help_text='one word for title alias.')
-    foodname = models.CharField('음식 이름',max_length=200)
-    titleimage = ThumbnailImageField('대표 사진',upload_to='photo/%Y/%m')
+    foodname = models.CharField('음식 이름',max_length=25)
+    titleimage = ThumbnailImageField('대표 사진',upload_to='Recipe/titleiamge/%y/%m/%d')
     servings = models.IntegerField('조리분량',default=1, help_text='인분')
     cookingtime = models.IntegerField('조리시간(분)',default=1, help_text='분')
     create_date = models.DateTimeField('Create Date', auto_now_add=True)
@@ -60,7 +60,7 @@ class Foodinfo(models.Model):
 @python_2_unicode_compatible
 class Recipeinfo(models.Model):
     recipeinfo = models.ForeignKey(Recipe)
-    image = ThumbnailImageField(upload_to='photo/%Y/%m')
+    image = ThumbnailImageField(upload_to='Recipe/content/%y/%m/%d')
     description = models.TextField('Recipe Description', blank=True)
    
     def __str__(self):

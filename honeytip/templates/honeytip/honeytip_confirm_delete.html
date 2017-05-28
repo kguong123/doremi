@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}HoneyTip_confirm_delete{% endblock %}
+
+{% block content %}
+<div id="content">
+
+    <h1>HoneyTip Delete</h1>
+
+    <form action="" method="post">{% csrf_token %}
+        <p>Are you sure you want to delete "{{ object }}" ?</p>
+        <input type="submit" value="Confirm" />
+    </form>
+
+</div>
+{% endblock %}

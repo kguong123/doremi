@@ -139,7 +139,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app',
     'honeytip',
     'recipe',
     'delivery',

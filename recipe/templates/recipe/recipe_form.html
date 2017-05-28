@@ -7,7 +7,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  <script type="text/javascript">
+
+
+{% load staticfiles %}
+
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/jasny-bootstrap.min.css' %}" type="text/css">
+
+
+<script type="text/javascript">
     var count = 1;
     function add(){
         if (count >= 0){
@@ -28,55 +38,56 @@
     document.getElementById('sortWrap').removeChild(obj.parentNode);
     
     }
-  </script>
+</script>
+<script type="text/javascript">
+  var count = 1;
+  function addimg(){
+      if (count >= 0){
+        var div = document.createElement('div');
+        div.innerHTML = document.getElementById('az').innerHTML;
+        document.getElementById('sp').appendChild(div);
+                          
+      }else{
+        count = count -1; 
 
-  <script type="text/javascript">
-    var count = 1;
-    function addimg(){
-        if (count >= 0){
-          var div = document.createElement('div');
-          div.innerHTML = document.getElementById('az').innerHTML;
-          document.getElementById('sp').appendChild(div);
-                            
-        }else{
-          count = count -1; 
+      }
+      count = count +1; 
+
+  }
   
-        }
-        count = count +1; 
+  function removeimg(obj){
   
-    }
-    
-    function removeimg(obj){
-    
-    document.getElementById('sp').removeChild(obj.parentNode);
-    
-    }
-  </script>
+  document.getElementById('sp').removeChild(obj.parentNode);
+  
+  }
+</script>
+<style type="text/css">
+  #sortWrap {
+    padding: 10px;
+  }
 
-  <style type="text/css">
-    #sortWrap {
-      padding: 10px;
-    }
+  #sortWrap div {
+    margin: 10px;
+    padding: 10px 0 10px 20px;
+    background-color: #FFF;
+    border: 0px solid #ddd;
+    cursor: ns-resize;
+  }
 
-    #sortWrap div {
-      margin: 10px;
-      padding: 10px 0 10px 20px;
-      background-color: #FFF;
-      border: 0px solid #ddd;
-      cursor: ns-resize;
-    }
+  #sp {
+    padding: 10px;
+  }
 
-    #sp {
-      padding: 10px;
-    }
-
-    #sp div {
-      border: 0px;
-      cursor: ns-resize;
-    }
-
-    }
-  </style>
+  #sp div {
+    margin-bottom:10px;
+    padding: 10px 0 10px 20px;
+    background-color: #FFF;
+    border: 0px solid #ddd;
+    cursor: ns-resize;
+    height: 20%;
+    width: 100%;
+  }
+</style>
 
 <div>
   <h1>Recipe Add</h1>
@@ -93,7 +104,7 @@
   {% csrf_token %}
 
   {% if form.errors %}
-  <p class="errornote">Wrong! Please correct the error(s) below.</p>
+  <p class="errornote">{{form.errors}}</p>
   {% endif %}
 
 <div class="col-md-3">
@@ -102,7 +113,48 @@
 
 
 <fieldset class="aligned">
-  
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">
+      {{ form.titleimage.label_tag }}
+    </label>
+    <div class="col-sm-10">
+      {{ form.titleimage }}
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">
+      {{ form.owner.label_tag }}
+    </label>
+    <div class="col-sm-10">
+      <select name="owner" required id="id_owner">
+        <option value="">---------</option>
+        <option value="1" selected>{{ user.get_username }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">
+      {{ form.viewcount.label_tag }}
+    </label>
+    <div class="col-sm-10">
+      {{ form.viewcount }}
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">
+      {{ form.scraps.label_tag }}
+    </label>
+    <div class="col-sm-10">
+      {{ form.scraps }}
+    </div>
+  </div>
+
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">
       {{ form.title.label_tag }}
@@ -111,6 +163,7 @@
       {{ form.title }}
     </div>
   </div>
+
 
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">
@@ -123,10 +176,28 @@
 
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">
+      {{ form.slug.label_tag }}
+    </label>
+    <div class="col-sm-10">
+      {{ form.slug }}
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">
       {{ form.servings.label_tag }}
     </label>
     <div class="col-sm-10">
       {{ form.servings }}
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">
+      {{ form.cookingtime.label_tag }}
+    </label>
+    <div class="col-sm-10">
+      {{ form.cookingtime }}
     </div>
   </div>
 
@@ -141,45 +212,116 @@
 
   <hr style="border: 0px;">
 
-{{ formset.management_form }}
-  {% for form in formset %}
+{{ foodinfo_form.management_form }}
+  {% for form in foodinfo_form %}
     {{ form.id }}
-  <fieldset class="aligned">
-    <div class="row" >
-        <div id="sortWrap">
+    <fieldset class="aligned">
+      <div class="row" >
+          <div id="sortWrap">
 
-            <div class="form-group" id="as" style="display:none">
-              &emsp; <label for="exampleInputName2">{{ form.ingredient.label_tag }}</label>
-              {{ form.ingredient }} &emsp;
-              <label for="exampleInputEmail2">{{ form.quantity.label_tag }}</label>
-              {{ form.quantity }}
+              <div class="form-group" id="as" style="display:none">
+                &emsp; <label for="exampleInputName2">{{ form.ingredient.label_tag }}</label>
+                {{ form.ingredient }} &emsp;
+                <label for="exampleInputEmail2">{{ form.quantity.label_tag }}</label>
+                {{ form.quantity }}
 
-              {% load staticfiles %}
-              <input type="image" onclick="remove(this)" src="{% static 'img/x.png' %}"> 
-            </div>
-            <div class="form-group" id="as">
-              &emsp; <label for="exampleInputName2">{{ form.ingredient.label_tag }}</label>
-              {{ form.ingredient }} &emsp;
-              <label for="exampleInputEmail2">{{ form.quantity.label_tag }}</label>
-              {{ form.quantity }}
-              {% load staticfiles %}
-              <input type="image" onclick="remove(this)" src="{% static 'img/x.png' %}"> 
-            </div>
-            
- 
+                {% load staticfiles %}
+                <input type="image" onclick="remove(this)" src="{% static 'img/x.png' %}"> 
+              </div>
+              <div class="form-group" id="as">
+                &emsp; <label for="exampleInputName2">{{ form.ingredient.label_tag }}</label>
+                {{ form.ingredient }} &emsp;
+                <label for="exampleInputEmail2">{{ form.quantity.label_tag }}</label>
+                {{ form.quantity }}
+                {% load staticfiles %}
+                <input type="image" onclick="remove(this)" src="{% static 'img/x.png' %}"> 
+              </div>
+              
+   
+          </div>
+          <div align="right">
+            {% load staticfiles %}
+            <input type="image" onclick="add()" src="{% static 'img/plus.png' %}">
+            <br> 
+          </div>
         </div>
-        <div align="right">
-          {% load staticfiles %}
-          <input type="image" onclick="add()" src="{% static 'img/plus.png' %}">
-          <br> </div>
-      </div>
-    </div>
-  </fieldset>
+    </fieldset>
   {% endfor %}
 
+  <hr class="">
 
-  <script type="text/javascript">
-    $("#sortWrap").sortable({
+  <div class="col-md-3">
+    <h4 class="">조리방법</h4>
+    <p style="color:#b7b7b7;">위아래 드래그해서 순서 변경가능 </p>
+  </div>
+
+  {{ recipeinfo_form.management_form }}
+    {% for form in recipeinfo_form %}
+      {{ form.id }}
+
+      <fieldset class="aligned">
+            <div id="sp">
+              <div data-order="0" id="az" style="display:none">
+                  
+                  <div class="fileinput fileinput-new" data-provides="fileinput" style="width: 25%; margin-right:30px; ">
+                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                    </div>
+                    <div>
+                      <span class="btn btn-default btn-file">
+                        <span class="fileinput-new">Select image</span>
+                        <span class="fileinput-exists">Change</span>
+                        <input type="file" name="...">
+                      </span>
+                      <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                    </div>
+                  </div>
+                  {{form.description}}
+                  {% load staticfiles %}
+                  <input type="image" onclick="removeimg(this)" src="{% static 'img/x3.png' %}">
+
+              </div>
+
+              <div data-order="0" id="az">
+                  
+                  <div class="fileinput fileinput-new" data-provides="fileinput" style="width: 25%; margin-right:30px; ">
+                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                    <div>
+                      <span class="btn btn-default btn-file">
+                        <span class="fileinput-new">Select image</span>
+                        <span class="fileinput-exists">Change</span>
+                        <input type="file" name="...">
+                      </span>
+                      <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                    </div>
+                  </div>
+                  {{form.description}}
+                  {% load staticfiles %}
+                  <input type="image" onclick="removeimg(this)" src="{% static 'img/x3.png' %}">
+
+              </div>
+
+            </div>
+          <div align="right">
+            {% load staticfiles %}
+            <input type="image" onclick="addimg()" src="{% static 'img/plus.png' %}">
+          </div>
+
+      </fieldset>
+
+    {% endfor %}
+
+    <hr class="">
+    <div class="submit-row">
+        <center><input type="submit" value="Submit"/></center>
+    </div>
+
+    
+
+    </form>
+
+
+<script type="text/javascript">
+  $("#sortWrap").sortable({
       axis: "y",
       containment: "parent",
       update: function (event, ui) {
@@ -188,8 +330,8 @@
         });
         console.log(order);
       }
-    });
-    $("#sp").sortable({
+  });
+  $("#sp").sortable({
     axis: "y",
     containment: "parent",
     update: function (event, ui) {
@@ -199,6 +341,6 @@
       console.log(order);
     }
   });
-  </script>
+</script>
 
 {% endblock %}

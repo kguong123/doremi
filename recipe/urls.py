@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^$', RecipeLV.as_view(), name='index'),
     url(r'^add/$', RecipeCV.as_view(), name='add'),
     url(r'^(?P<slug>[-\w]+)/$', RecipeDV.as_view(), name='recipe_detail'),
-    
+    #url(r'^recipe/delete/(?P<slug>[-\w]+)/$', RecipeDeleteView.as_view(), name="recipe_delete"),
+    url(r'^(?P<slug>[-\w]+)/delete/$',RecipeDeleteView.as_view(), name="delete"),
 ]

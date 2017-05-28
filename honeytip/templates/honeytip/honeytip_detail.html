@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+
+<style>
+  #comments {
+    float:right;
+
+  }
+
+  #comment-wrapper {
+    position: relative;
+  }
+
+  #commentWrapper { /* required to avoid jumping */
+    left: 450px;
+    position: relative;
+    margin-left: 35px;
+    width:280px;
+  }
+
+  #comment {
+    position: relative;
+    top: 0;
+    margin-top: 20px;
+    border-top: 0px;
+    padding-top: 19px;
+    width:350px;
+
+  }
+
+  #comments ol li {
+    border-top: 0px;
+  }
+
+  #comments ol li:first-child {
+    border-top: 0;
+  }
+
+  #comment.fixed {
+    position: fixed;
+    top: 0;
+  }
+</style>
+
+<script src="./jquery-1.4.3.min.js"></script>
+
+<script>
+  function checkMobileDevice() {
+      var mobileKeyWords = new Array('Android', 'iPhone', 'iPod', 'BlackBerry', 'Windows CE', 'SAMSUNG', 'LG', 'MOT', 'SonyEricsson');
+      for (var info in mobileKeyWords) {
+          if (navigator.userAgent.match(mobileKeyWords[info]) != null) {
+              return true;
+
+          }
+      }
+      return false;
+  }
+
+  $(function () {
+    
+    var msie6 = $.browser == 'msie' && $.browser.version < 7;
+    var device = checkMobileDevice();
+      
+      if (device){
+        $('#comment').removeClass('fixed');
+      }
+      else{
+        if (!msie6) {
+          var top = $('#comment').offset().top - parseFloat($('#comment').css('margin-top').replace(/auto/, 0));
+          $(window).scroll(function (event) {
+            // what the y position of the scroll is
+            var y = $(this).scrollTop();
+            
+            // whether that's below the form
+            if (y >= top) {
+              // if so, ad the fixed class
+              $('#comment').addClass('fixed');
+            } else {
+              // otherwise remove it
+              $('#comment').removeClass('fixed');
+            }
+          });
+        }  
+      }  
+  });
+</script> 
+
+<div class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="row">
+            <div class="col-md-12">
+              <h1>Recipe Details <small>- category</small></h1>
+            </div>
+          </div>
+        </div>
+        <hr class="">
+        <div class="row">
+          <div class="col-md-12" style="word-break:break-all; word-wrap:break-word;">       
+            {% for contents in object.contents_set.all %}
+              <img class="center-block img-fluid d-block" src="{{ contents.honeyimage.url }}" style = "width: 100%; height: auto;"> 
+              <br>           
+              <h4>{{ contents.honeydescription}}</h4>
+              <br>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      
+      
+      <div class="col-md-4">
+        <div id="comment">
+          <div class="card-block" style="word-break:break-all; word-wrap:break-word;">
+            <h3 class="card-title">{{ object.title }}</h3>
+            <center>
+              <img style="width:250px;height:250px" src="{{ object.titleimage.thumb_url }}" />
+            </center>
+ 
+            <div class="table-responsive">          
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td width="50">{% load staticfiles %}
+                      <img src="{% static 'img/glyphicons-4-user.png' %}" style="width: 20px; height: 20px">
+                    </td>
+                    <td>작성자</td>
+                    <td>{{ object.owner }}</td>
+                  </tr>
+                  <tr>
+                    <td width="50">{% load staticfiles %}
+                      <img src="{% static 'img/glyphicons-52-eye-open.png' %}" style="width: 20px; height: 15px">
+                    </td>
+                    <td>조회수</td>
+                    <td>{{ object.viewcount }}</td>
+                  </tr>
+                  <tr>
+                    <td width="50">{% load staticfiles %}
+                      <img src="{% static 'img/glyphicons-20-heart-empty.png' %}" style="width: 20px; height: 20px">
+                    </td>
+                    <td>스크랩수</td>
+                    <td>{{ object.scraps }}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>           
+            <center>
+             <a href="{% url 'honeytip:delete' honeytip.id %}" class="btn btn-primary" role="button">Delete</a>
+              <a href="#" class="btn btn-default" role="button">Update</a>
+            </center>
+
+          </div>
+        </div>
+      </div> 
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
