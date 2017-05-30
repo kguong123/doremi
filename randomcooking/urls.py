@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from randomcooking.views import *
+from .views import *
 
 urlpatterns = [
     url(r'^$', randomcooking.as_view(), name='index'),
+    url(r'^random/$', random.as_view(), name='random'),
 ]

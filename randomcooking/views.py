@@ -16,7 +16,7 @@ from django.db.models import Q
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from DjangoApp.views import LoginRequiredMixin
-
+from recipe.models import Recipe, Foodinfo, Recipeinfo
 
 # Create your views here.
 
@@ -24,3 +24,9 @@ from DjangoApp.views import LoginRequiredMixin
 class randomcooking(TemplateView) :
     template_name = 'templates/randomcooking.html'
 
+class random(ListView) :
+    template_name = 'templates/randomcooking_all.html'
+    context_object_name='recipes' 
+
+    def get_queryset(self):
+   		return Recipe.objects.order_by('?')[:1]

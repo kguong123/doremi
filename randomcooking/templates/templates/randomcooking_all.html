@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+	<h1>Randomcooking</h1>
+	<p>지금 당장! 무엇을 먹을지 고민된다면 버튼을 눌러주세요~</p>
+	<hr class="">
+
+</div>
+
+<center>
+		<a href="{% url 'randomcooking:random' %}" class="btn btn-primary" role="Button">지금 뭐먹지?</a>
+		<hr class="" style="border: 0px;">
+</center>
+
+
+	
+
+<div class="col-md-4">
+</div>
+
+{% for recipe in recipes %}
+<div class="col-md-4">
+    <div class="thumbnail">
+	    <div style="width: auto; height: 250px; overflow: hidden">
+		    <a href="{{ recipe.get_absolute_url }}">
+            <img style="width:350px;height:350px" src="{{ recipe.titleimage.url }}" />
+            </a>
+		</div>
+	    <div class="caption" style="height:150px;word-break:break-all; word-wrap:break-word;">
+	      <p>{{ recipe.owner }}</p>
+	      <h4><a href='{{ recipe.get_absolute_url }}'>{{ recipe.title }}</a></h4>
+	      <p>{{ recipe.foodname }}</p>
+	    </div>
+	    <center>
+		    <p>
+		        <a href="#" class="btn btn-primary" role="button">Button</a>
+		        <a href="#" class="btn btn-default" role="button">Button</a>
+			</p>
+	    </center>
+
+  	</div>
+</div>
+{% endfor %}  
+  
+<div class="col-md-4">
+</div>
+
+
+
+
+
+{% endblock %}

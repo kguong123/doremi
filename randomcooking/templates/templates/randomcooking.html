@@ -2,9 +2,16 @@
 
 {% block content %}
 
-<h2>randomcooking.</h2>
-<h3></h3>
+<div>
+	<h1>Randomcooking</h1>
+	<p>지금 당장! 무엇을 먹을지 고민된다면 버튼을 눌러주세요~</p>
+	<hr class="">
 
-<p>Use this area to provide additional information.</p>
+</div>
+<center>
+		<a href="{% url 'randomcooking:random' %}" class="btn btn-primary" role="Button">지금 뭐먹지?</a>
+</center>
+
 
 {% endblock %}
+
