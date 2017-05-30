@@ -66,3 +66,19 @@ class HoneyTipCV(LoginRequiredMixin, CreateView):
 class HoneyTipDeleteView(LoginRequiredMixin, DeleteView) :
     model = HoneyTip
     success_url = reverse_lazy('honeytip:index')
+
+class BstrapSearchLV(ListView) :
+    template_name = 'honeytip/post_bstrap_search.html'
+    
+    def get_queryset(self):
+        schWord = '%s' % self.request.GET['search']
+        post_list = HoneyTip.objects.filter(Q(title__icontains=schWord)).distinct() or HoneyTip.objects.filter(Q(contents__honeydescription__icontains=schWord)).distinct()
+        self.search_term = schWord
+        self.count = post_list.count()
+        return post_list
+
+    def get_context_data(self, **kwargs):
+        context = super(BstrapSearchLV, self).get_context_data(**kwargs)
+        context['search_term'] = self.search_term
+        context['search_count'] = self.count
+        return context

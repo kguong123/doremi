@@ -46,7 +46,7 @@ class HoneyTip(models.Model):
  
 @python_2_unicode_compatible
 class Contents(models.Model):
-    honeycontents = models.ForeignKey(HoneyTip)
+    honeycontents = models.ForeignKey(HoneyTip, on_delete=models.CASCADE)
     honeyimage = ThumbnailImageField(upload_to='honeytip/content/%y/%m/%d')
     honeydescription = models.TextField('honeytip Description', blank=True)
    

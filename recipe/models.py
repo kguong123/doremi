@@ -48,7 +48,7 @@ class Recipe(models.Model):
 #the field of the model also needs to be changed accordingly. 
 @python_2_unicode_compatible
 class Foodinfo(models.Model):
-    foodinfo = models.ForeignKey(Recipe)
+    foodinfo = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     ingredient = models.CharField(max_length=200,blank=True)
     quantity = models.CharField(max_length=200,blank=True, help_text='재료량: 포기, 개, 공기')
 
@@ -59,7 +59,7 @@ class Foodinfo(models.Model):
 #the field of the model also needs to be changed accordingly.        
 @python_2_unicode_compatible
 class Recipeinfo(models.Model):
-    recipeinfo = models.ForeignKey(Recipe)
+    recipeinfo = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     image = ThumbnailImageField(upload_to='Recipe/content/%y/%m/%d')
     description = models.TextField('Recipe Description', blank=True)
    

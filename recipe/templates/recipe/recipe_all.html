@@ -5,12 +5,22 @@
 <div>
 	<h1>Recipe List</h1>
 	<p>Use this area to provide additional information.</p>
-	<hr class="">
+	
 
-		<div align="right" style="margin-bottom: 15px;">
+		<div align="right" style="margin-bottom: 15px; border: 1px;">
 			<a href="{% url 'recipe:add' %}" class="btn btn-primary" role="Button">글쓰기</a>
-			<br>
+			<div style="float: left;">
+				<form class="navbar-form" role="search" action="{% url 'recipe:bssearch' %}">
+			        <div class="form-group" style="display:inline;">
+			          <div class="input-group">
+			            <input type="text" class="form-control" name="search" placeholder="search recipe contents">
+			            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+			          </div>
+			        </div>
+				</form>
+			</div>
 		</div>
+		<hr class="">
 
 </div>
 

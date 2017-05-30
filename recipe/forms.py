@@ -1,6 +1,7 @@
 from .models import *
 from django.forms.models import inlineformset_factory
 from django.forms import ModelForm, Textarea
+from django import forms
 
 class RecipeForm(ModelForm):
     class Meta:
@@ -22,3 +23,6 @@ RecipeinfoInlineFormSet = inlineformset_factory(Recipe, Recipeinfo,
 foodinfoInlineFormSet = inlineformset_factory(Recipe, Foodinfo,
     fields = ['ingredient', 'quantity'],
     extra = 1)
+
+
+

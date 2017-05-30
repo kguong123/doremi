@@ -15,12 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from recipe.views import *
+from .views import *
 
 urlpatterns = [
     url(r'^$', RecipeLV.as_view(), name='index'),
+    url (r'^bssearch/$', BstrapSearchLV.as_view(), name='bssearch'),
     url(r'^add/$', RecipeCV.as_view(), name='add'),
     url(r'^(?P<slug>[-\w]+)/$', RecipeDV.as_view(), name='recipe_detail'),
-    #url(r'^recipe/delete/(?P<slug>[-\w]+)/$', RecipeDeleteView.as_view(), name="recipe_delete"),
     url(r'^(?P<slug>[-\w]+)/delete/$',RecipeDeleteView.as_view(), name="delete"),
+    # Example: /bssearch/ (Bootstrap Search)
+
 ]

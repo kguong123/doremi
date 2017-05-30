@@ -30,6 +30,24 @@ class RecipeLV(ListView) :
     context_object_name = 'recipes'
     paginate_by = 8
 
+class BstrapSearchLV(ListView) :
+    template_name = 'recipe/post_bstrap_search.html'
+
+    def get_queryset(self):
+        schWord = '%s' % self.request.GET['search']
+        post_list = Recipe.objects.filter(Q(title__icontains=schWord) | Q(foodname__icontains=schWord)).distinct() or Recipe.objects.filter(Q(recipeinfo__description__icontains=schWord)).distinct()
+        self.search_term = schWord
+        self.count = post_list.count()
+        return post_list
+
+    def get_context_data(self, **kwargs):
+        context = super(BstrapSearchLV, self).get_context_data(**kwargs)
+        context['search_term'] = self.search_term
+        context['search_count'] = self.count
+        return context
+
+
+
 class RecipeDV(DetailView) :
     model = Recipe
 
@@ -125,3 +143,4 @@ class RecipeCV(LoginRequiredMixin, CreateView):
 class RecipeDeleteView(LoginRequiredMixin, DeleteView) :
     model = Recipe
     success_url = reverse_lazy('recipe:index')
+

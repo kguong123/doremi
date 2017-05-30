@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}post_bstrap_search.html{% endblock %}
+
+{% block content %}
+<div>
+	<h1>Honeytip Search Results</h1>
+	<p>Use this area to provide additional information.</p>
+		
+		<div align="right" style="margin-bottom: 15px;">
+			<a href="{% url 'honeytip:add' %}" class="btn btn-primary" role="Button">글쓰기</a>
+			<a href="{% url 'honeytip:index' %}" class="btn btn-default" role="button">목록으로</a>	
+			<div style="float: left;">
+				<form class="navbar-form" role="search" action="{% url 'honeytip:bssearch' %}">
+			        <div class="form-group" style="display:inline;">
+			          <div class="input-group">
+			            <input type="text" class="form-control" name="search" placeholder="search honeytip contents">
+			            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+			          </div>
+			        </div>
+				</form>
+			</div>
+		
+		</div>
+
+		<hr class="">
+
+</div>
+
+{% if object_list %}
+	<b><i>Search Word({{ search_term }}) - {{ search_count }} posts Found !</i></b>	   
+	<div class="py-5">
+		<div class="container">
+		  <div class="row">
+				{% for recipe in object_list %}
+				    <div class="col-md-3">
+					    <div class="thumbnail">
+						    <div style="width: auto; height: 250px; overflow: hidden">
+							    <a href="{{ recipe.get_absolute_url }}">
+					            <img style="width:350px;height:350px" src="{{ recipe.titleimage.url }}" />
+					            </a>
+							</div>
+						    <div class="caption" style="height:150px;word-break:break-all; word-wrap:break-word;">
+						      <p>{{ recipe.owner }}</p>
+						      <h4><a href='{{ recipe.get_absolute_url }}'>{{ recipe.title }}</a></h4>
+						      <p>{{ recipe.foodname }}</p>
+						    </div>
+						    <center>
+							    <p>
+							        <a href="#" class="btn btn-primary" role="button">Button</a>
+							        <a href="#" class="btn btn-default" role="button">Button</a>
+								</p>
+						    </center>
+
+					  	</div>
+				    </div>
+				{% endfor %}    
+		  </div>
+		</div>    
+	</div>
+
+{% elif search_term %}
+<b><i>Search Word({{ search_term }}) - Not Found !</i></b>
+{% endif %}
+
+
+{% endblock %}
