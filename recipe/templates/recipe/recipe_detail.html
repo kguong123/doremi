@@ -124,7 +124,7 @@
       
       
       <div class="col-md-4">
-        <div id="comment">
+        
           <div class="card-block" style="word-break:break-all; word-wrap:break-word;">
             <h3 class="card-title">{{ object.title }}</h3>
             <p class="lead">{{ object.foodname }} </p>
@@ -165,12 +165,13 @@
               </table>
             </div>
 
-          <center>
-            <a href="{% url 'recipe:delete' recipe.slug %}" class="btn btn-primary" role="button">Delete</a>
-            <a href="#" class="btn btn-default" role="button">Update</a>
-          </center>   
+              <center>
+                <a href="{% url 'recipe:delete' recipe.slug %}" class="btn btn-primary" role="button">Delete</a>
+                <a href="#" class="btn btn-default" role="button">Update</a>
+              </center>   
 
           </div>
+          <div id="comment">
             <hr class="">
             <h3 class="card-title">재료리스트 <small>- {{ object.servings }} 인기준</small> </h3>
             <ul class="list-group">
@@ -178,7 +179,7 @@
               <li class="list-group-item">{{ foodinfo.ingredient}} {{ foodinfo.quantity}} </li>
               {% endfor %}
             </ul>
-        </div>
+          </div>
       </div> 
 
 
