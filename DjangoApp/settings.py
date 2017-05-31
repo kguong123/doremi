@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'disqus',
     'honeytip',
     'recipe',
     'delivery',
@@ -148,6 +149,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
+DISQUS_WEBSITE_SHORTNAME = 'recipecomment'
+SITE_ID = 1
 
 AUTH_PASSWORD_VALIDATORS = [
     {
