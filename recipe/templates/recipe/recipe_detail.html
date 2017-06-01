@@ -54,48 +54,9 @@
 
 </style>
 
-<script src="./jquery-1.4.3.min.js"></script>
-
-<script>
-  function checkMobileDevice() {
-      var mobileKeyWords = new Array('Android', 'iPhone', 'iPod', 'BlackBerry', 'Windows CE', 'SAMSUNG', 'LG', 'MOT', 'SonyEricsson');
-      for (var info in mobileKeyWords) {
-          if (navigator.userAgent.match(mobileKeyWords[info]) != null) {
-              return true;
-
-          }
-      }
-      return false;
-  }
-
-  $(function () {
-    
-    var msie6 = $.browser == 'msie' && $.browser.version < 7;
-    var device = checkMobileDevice();
-      
-      if (device){
-        $('#comment').removeClass('fixed');
-      }
-      else{
-        if (!msie6) {
-          var top = $('#comment').offset().top - parseFloat($('#comment').css('margin-top').replace(/auto/, 0));
-          $(window).scroll(function (event) {
-            // what the y position of the scroll is
-            var y = $(this).scrollTop();
-            
-            // whether that's below the form
-            if (y >= top) {
-              // if so, ad the fixed class
-              $('#comment').addClass('fixed');
-            } else {
-              // otherwise remove it
-              $('#comment').removeClass('fixed');
-            }
-          });
-        }  
-      }  
-  });
-</script> 
+{% load staticfiles %}
+<script src="{% static 'js/jquery-1.4.3.min.js' %}"></script>
+<script src="{% static 'js/recipe_detail.js' %}"></script>
 
 <div class="py-5">
   <div class="container">
@@ -165,10 +126,21 @@
               </table>
             </div>
 
+          {% if user.is_authenticated and user == recipe.owner %}
+            <center>
+              <a href="{% url 'recipe:delete' recipe.slug %}" class="btn btn-primary" role="button">Delete</a>
+              <a href="#" class="btn btn-default" role="button">Update</a>
+            </center> 
+          {% else %}
               <center>
-                <a href="{% url 'recipe:delete' recipe.slug %}" class="btn btn-primary" role="button">Delete</a>
-                <a href="#" class="btn btn-default" role="button">Update</a>
-              </center>   
+                  <a href="#" class="btn btn-default" role="button">스크랩하기</a>
+              </center> 
+            
+          {% endif%}
+
+
+
+
 
           </div>
           <div id="comment">

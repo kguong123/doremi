@@ -18,5 +18,4 @@ class RecipeAdmin(admin.ModelAdmin):
     list_display = ('title', 'foodname')
     prepopulated_fields = {'slug': ('title',)}
 
-
 admin.site.register(Recipe, RecipeAdmin)

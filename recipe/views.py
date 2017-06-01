@@ -53,6 +53,11 @@ class RecipeDV(DetailView) :
 
 
 '''
+class RecipeDV(DetailView) :
+    model = Recipe
+
+'''
+'''
 class RecipeCV(LoginRequiredMixin, CreateView):
     model = Recipe
     fields = ['title', 'slug', 'foodname', 'titleimage', 'servings','cookingtime','viewcount','scraps', 'owner']

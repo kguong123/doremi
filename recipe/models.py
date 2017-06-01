@@ -20,7 +20,7 @@ class Recipe(models.Model):
     modify_date = models.DateTimeField('Modify Date', auto_now=True)
     viewcount= models.IntegerField(default=0)
     scraps = models.IntegerField(default=0)
-    owner = models.ForeignKey(User, null=True)
+    owner = models.ForeignKey('auth.User', null=True)
 
     class Meta:
         verbose_name = 'recipe'
