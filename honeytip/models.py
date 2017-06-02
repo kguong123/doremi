@@ -6,7 +6,8 @@ from django.core.urlresolvers import reverse
 from .fields import ThumbnailImageField
 from django.contrib.auth.models import User
 from django.utils.text import slugify
-
+from hitcount.models import HitCount, HitCountMixin
+from django.contrib.contenttypes.fields import GenericRelation
 # Create your models here.
 
 
@@ -17,7 +18,7 @@ class HoneyTip(models.Model):
     owner = models.ForeignKey(User, null=True)
     titleimage = ThumbnailImageField('대표 사진',upload_to='honeytip/titleiamge/%y/%m/%d')
     create_date = models.DateTimeField('Create Date', auto_now_add=True)
-    viewcount= models.IntegerField(default=0)
+    hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
     scraps = models.IntegerField(default=0)
     app_name=models.CharField(default='HoneyTip',max_length=20,  null=True)
 

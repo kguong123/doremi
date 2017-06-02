@@ -17,6 +17,9 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from DjangoApp.views import LoginRequiredMixin
 from django.shortcuts import redirect
+
+from hitcount.views import HitCountDetailView
+
 from .forms import *
 from .models import HoneyTip, Contents
 
@@ -30,8 +33,18 @@ class HoneyTipLV(ListView) :
     context_object_name = 'honeytips'
     paginate_by = 8
 
-class HoneyTipDV(DetailView) :
+class PostMixinDetailView(object):
     model = HoneyTip
+    def get_context_data(self, **kwargs):
+        context = super(PostMixinDetailView, self).get_context_data(**kwargs)
+        context['post_list'] = HoneyTip.objects.all()[:5]
+        return context
+
+class HoneyTipDV(PostMixinDetailView, HitCountDetailView) :
+    count_hit = True
+
+    
+
 
 
 class HoneyTipCV(LoginRequiredMixin, CreateView):

@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'hitcount',
     'disqus',
     'honeytip',
     'recipe',
@@ -149,8 +150,17 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
+#Disqus is a comment module. Below is the configuration of disqus.
 DISQUS_WEBSITE_SHORTNAME = 'recipecomment'
 SITE_ID = 1
+
+
+
+HITCOUNT_KEEP_HIT_ACTIVE = {'minutes': 60}
+HITCOUNT_HITS_PER_IP_LIMIT = 0  # unlimited
+HITCOUNT_EXCLUDE_USER_GROUP = ()  # not used
+HITCOUNT_KEEP_HIT_IN_DATABASE = {'seconds': 10}
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

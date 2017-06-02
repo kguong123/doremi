@@ -6,6 +6,8 @@ from django.core.urlresolvers import reverse
 from .fields import ThumbnailImageField
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from hitcount.models import HitCount, HitCountMixin
+from django.contrib.contenttypes.fields import GenericRelation
 
 # Create your models here.
 @python_2_unicode_compatible
@@ -17,8 +19,7 @@ class Recipe(models.Model):
     servings = models.IntegerField('조리분량',default=1, help_text='인분')
     cookingtime = models.IntegerField('조리시간(분)',default=1, help_text='분')
     create_date = models.DateTimeField('Create Date', auto_now_add=True)
-    modify_date = models.DateTimeField('Modify Date', auto_now=True)
-    viewcount= models.IntegerField(default=0)
+    hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
     scraps = models.IntegerField(default=0)
     owner = models.ForeignKey('auth.User', null=True)
 

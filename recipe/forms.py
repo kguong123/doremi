@@ -6,7 +6,7 @@ from django import forms
 class RecipeForm(ModelForm):
     class Meta:
         model = Recipe
-        fields = ['title', 'slug', 'foodname', 'titleimage', 'servings','cookingtime','viewcount','scraps', 'owner']
+        fields = ['title', 'slug', 'foodname', 'titleimage', 'servings','cookingtime','scraps', 'owner']
 
 class RecipeinfoForm(ModelForm):
     class Meta:

@@ -1,22 +1,28 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+
 from django.http import HttpRequest
+from django.core.urlresolvers import reverse_lazy
+
 from django.template import RequestContext
 from datetime import datetime
 
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.dates import ArchiveIndexView, YearArchiveView, MonthArchiveView
 from django.views.generic.dates import DayArchiveView, TodayArchiveView
-
 from django.views.generic.edit import FormView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
+from django.shortcuts import redirect
+from django.shortcuts import render
+
+from django.db.models import F
 from django.db.models import Q
 
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.urlresolvers import reverse_lazy
 from DjangoApp.views import LoginRequiredMixin
-from django.shortcuts import redirect
+
+from hitcount.views import HitCountDetailView
 from .forms import *
 from .models import *
 
@@ -29,6 +35,7 @@ class RecipeLV(ListView) :
     template_name = 'recipe/recipe_all.html'
     context_object_name = 'recipes'
     paginate_by = 8
+
 
 class BstrapSearchLV(ListView) :
     template_name = 'recipe/post_bstrap_search.html'
@@ -45,18 +52,19 @@ class BstrapSearchLV(ListView) :
         context['search_term'] = self.search_term
         context['search_count'] = self.count
         return context
+    
 
-
-
-class RecipeDV(DetailView) :
+class PostMixinDetailView(object):
     model = Recipe
+    def get_context_data(self, **kwargs):
+        context = super(PostMixinDetailView, self).get_context_data(**kwargs)
+        context['post_list'] = Recipe.objects.all()[:5]
+        return context
+
+class RecipeDV(PostMixinDetailView, HitCountDetailView) :
+    count_hit = True
 
 
-'''
-class RecipeDV(DetailView) :
-    model = Recipe
-
-'''
 '''
 class RecipeCV(LoginRequiredMixin, CreateView):
     model = Recipe
