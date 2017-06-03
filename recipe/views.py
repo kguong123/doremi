@@ -54,6 +54,7 @@ class BstrapSearchLV(ListView) :
         return context
     
 
+#hitcount
 class PostMixinDetailView(object):
     model = Recipe
     def get_context_data(self, **kwargs):
@@ -93,6 +94,7 @@ class RecipeCV(LoginRequiredMixin, CreateView):
         else:
             return self.render_to_response(self.get_context_data(form=form))
 '''
+
 class RecipeCV(LoginRequiredMixin, CreateView):
     template_name = 'recipe/recipe_form.html'
     model = Recipe

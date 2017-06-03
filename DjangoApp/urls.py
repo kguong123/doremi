@@ -1,7 +1,3 @@
-"""
-Definition of urls for DjangoApp.
-"""
-
 from datetime import datetime
 from .forms import BootstrapAuthenticationForm
 from .views import HomeView
@@ -30,12 +26,5 @@ urlpatterns = [
     url(r'^honeytip/', include('honeytip.urls', namespace='honeytip')),
     url(r'^delivery/', include('delivery.urls', namespace='delivery')),
     url(r'^randomcooking/', include('randomcooking.urls', namespace='randomcooking')),
-
-    # after remove
-    
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^mypage/', include('mypage.urls', namespace='mypage')),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

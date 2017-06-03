@@ -144,7 +144,8 @@ INSTALLED_APPS = (
     'honeytip',
     'recipe',
     'delivery',
-    'randomcooking',    
+    'randomcooking',
+    'mypage',  
     # Uncomment the next line to enable the admin:
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',

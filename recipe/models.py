@@ -21,7 +21,7 @@ class Recipe(models.Model):
     create_date = models.DateTimeField('Create Date', auto_now_add=True)
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
     scraps = models.IntegerField(default=0)
-    owner = models.ForeignKey('auth.User', null=True)
+    owner = models.ForeignKey(User, null=True)
 
     class Meta:
         verbose_name = 'recipe'

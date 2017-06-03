@@ -33,6 +33,8 @@ class HoneyTipLV(ListView) :
     context_object_name = 'honeytips'
     paginate_by = 8
 
+
+#comment
 class PostMixinDetailView(object):
     model = HoneyTip
     def get_context_data(self, **kwargs):
