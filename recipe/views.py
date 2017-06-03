@@ -34,6 +34,15 @@ class RecipeLV(ListView) :
     model = Recipe
     template_name = 'recipe/recipe_all.html'
     context_object_name = 'recipes'
+    queryset = Recipe.objects.order_by('-create_date')
+    paginate_by = 8
+
+
+class RecipeScrapCountLV(ListView) :
+    model = Recipe
+    template_name = 'recipe/recipe_all.html'
+    queryset = Recipe.objects.order_by('-scraps')
+    context_object_name = 'recipes'
     paginate_by = 8
 
 

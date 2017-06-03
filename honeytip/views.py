@@ -30,9 +30,16 @@ from .models import HoneyTip, Contents
 class HoneyTipLV(ListView) :
     model = HoneyTip
     template_name = 'honeytip/honeytip_all.html'
+    queryset = HoneyTip.objects.order_by('-create_date')
     context_object_name = 'honeytips'
     paginate_by = 8
 
+class HoneyTipScrapCountLV(ListView) :
+    model = HoneyTip
+    template_name = 'honeytip/honeytip_all.html'
+    queryset = HoneyTip.objects.order_by('-scraps')
+    context_object_name = 'honeytips'
+    paginate_by = 8
 
 #comment
 class PostMixinDetailView(object):

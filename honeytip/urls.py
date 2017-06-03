@@ -19,6 +19,7 @@ from honeytip.views import *
 
 urlpatterns = [
     url(r'^$', HoneyTipLV.as_view(), name='index'),
+    url(r'^recent/$', HoneyTipScrapCountLV.as_view(), name='scrap_order'),
     url(r'^bssearch/$', BstrapSearchLV.as_view(), name='bssearch'),
     url(r'^add/$', HoneyTipCV.as_view(), name='add'),
     url(r'^(?P<slug>[-\w]+)/$', HoneyTipDV.as_view(), name='honeytip_detail'),

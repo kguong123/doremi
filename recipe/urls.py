@@ -19,6 +19,7 @@ from .views import *
 
 urlpatterns = [
     url(r'^$', RecipeLV.as_view(), name='index'),
+    url(r'^recent/$', RecipeScrapCountLV.as_view(), name='scrap_order'),
     url (r'^bssearch/$', BstrapSearchLV.as_view(), name='bssearch'),
     url(r'^add/$', RecipeCV.as_view(), name='add'),
     url(r'^(?P<slug>[-\w]+)/$', RecipeDV.as_view(), name='recipe_detail'),
