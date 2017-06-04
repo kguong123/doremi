@@ -19,6 +19,8 @@ from .views import *
 
 urlpatterns = [
     url(r'^$', Mypage.as_view(), name='index'),
-    url(r'^(?P<username>[-\w]+)/writelist/$', RecipeWriteLV, name='write_list'),
-    url(r'^scraplist/$', ScrapLV.as_view(), name='scrap_list'),
+    url(r'^(?P<username>[-\w]+)/writelist/$', WriteLV, name='write_list'),
+    url(r'^recipescrap/(?P<slug>[-\w]+)/$', RecipeSV, name='recipe_scrap'),
+    url(r'^honeytipscrap/(?P<slug>[-\w]+)/$', HoneyTipSV, name='honeytip_scrap'),
+    url(r'^(?P<username>[-\w]+)/scraplist/$', ScrapLV, name='scrap_list'),
 ]

@@ -72,7 +72,7 @@ body {
                           <span class="glyphicon glyphicon-heart"></span>  MyPage
                         </a>
                        <ul class="dropdown-menu">
-                         <li><a href="{% url 'mypage:scrap_list' %}">즐겨찾기</a></li>
+                         <li><a href="{% url 'mypage:scrap_list' user %}">즐겨찾기</a></li>
                          <li><a href="{% url 'mypage:write_list' user %}">작성한 게시글 목록</a></li>
                        </ul>                      
                     {% endif %}

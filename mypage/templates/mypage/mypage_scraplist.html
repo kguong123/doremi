@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+	<h1>Write List</h1>
+	<p>Use this area to provide additional information.</p>
+		<hr class="" style="border: 0px">
+</div>
+
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#home">Recipe</a></li>
+  <li><a data-toggle="tab" href="#menu1">HoneyTip</a></li>
+</ul>
+<br/>
+<div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+	<div class="row">
+		{% for recipe in recipes %}
+		    <div class="col-md-3">
+			    <div class="thumbnail">
+				    <div style="width: auto; height: 250px; overflow: hidden">
+					    <a href="{{ recipe.get_absolute_url }}">
+			            <img style="width:350px;height:350px" src="{{ recipe.titleimage.url }}" />
+			            </a>
+					</div>
+				    <div class="caption" style="height:150px;word-break:break-all; word-wrap:break-word;">
+				      <p>{{ recipe.owner }}</p>
+				      <h4><a href='{{ recipe.get_absolute_url }}'>{{ recipe.title }}</a></h4>
+				      <p>{{ recipe.foodname }}</p>
+				    </div>
+					<center>
+						<div class="panel-footer">
+						  	<span class="glyphicon glyphicon-user"></span> {{ recipe.owner }} | 
+						  	<span class="glyphicon glyphicon-heart"></span> {{ recipe.scraps }} | 
+			                <span class="glyphicon glyphicon-time"></span> {{ recipe.cookingtime }} 분 소요
+						</div>
+					</center>
+
+			  	</div>
+		    </div>
+		{% endfor %}    
+	</div>
+  </div>
+  <div id="menu1" class="tab-pane fade">
+	<div class="row">
+		{% for honeytip in honeytips %}
+		    <div class="col-md-3">
+			    <div class="thumbnail">
+				    <div style="width: auto; height: 250px; overflow: hidden">
+					    <a href="{{ honeytip.get_absolute_url }}">
+			            <img style="width:350px;height:350px;" src="{{ honeytip.titleimage.url }}" />
+			            </a>
+					</div>
+				    <div class="caption" style="height:100px;word-break:break-all; word-wrap:break-word;">
+				      <h4><a href='{{ honeytip.get_absolute_url }}'>{{ honeytip.title }}</a></h4>
+				    </div>
+					<center>
+						<div class="panel-footer">
+						  	<span class="glyphicon glyphicon-user"></span> {{ honeytip.owner }} | 
+						  	<span class="glyphicon glyphicon-heart"></span> {{ honeytip.scraps }} | 
+			                <span class="glyphicon glyphicon-time"></span> {{ honeytip.create_date|date:"Y m d" }}
+						</div>
+					</center>
+
+			  	</div>
+		    </div>
+		{% endfor %}    
+	</div>
+  </div>
+</div>
+
+{% endblock %}

@@ -133,7 +133,7 @@
             </center> 
           {% else %}
               <center>
-                  <a href="#" class="btn btn-default" role="button">즐겨찾기</a>
+                  <a href="{% url 'mypage:recipe_scrap' recipe.slug %}" class="btn btn-default" role="button">즐겨찾기</a>
               </center> 
             
           {% endif%}
