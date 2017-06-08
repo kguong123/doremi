@@ -50,8 +50,8 @@ class Recipe(models.Model):
 @python_2_unicode_compatible
 class Foodinfo(models.Model):
     foodinfo = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    ingredient = models.CharField(max_length=200,blank=True)
-    quantity = models.CharField(max_length=200,blank=True, help_text='재료량: 포기, 개, 공기')
+    ingredient = models.CharField('재료정보',max_length=200,blank=True)
+    quantity = models.CharField('재료량: 포기, 개, 공기',max_length=200,blank=True, help_text='재료량: 포기, 개, 공기')
 
     def __str__(self):
         return self.ingredient

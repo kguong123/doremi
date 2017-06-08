@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
-
+from django.db import transaction
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.dates import ArchiveIndexView, YearArchiveView, MonthArchiveView
 from django.views.generic.dates import DayArchiveView, TodayArchiveView
@@ -22,7 +22,6 @@ from hitcount.views import HitCountDetailView
 
 from .forms import *
 from .models import HoneyTip, Contents
-
 
 # Create your views here.
 
@@ -52,15 +51,10 @@ class PostMixinDetailView(object):
 class HoneyTipDV(PostMixinDetailView, HitCountDetailView) :
     count_hit = True
 
-    
-
-
 
 class HoneyTipCV(LoginRequiredMixin, CreateView):
     model = HoneyTip
-    fields = ['title', 'slug','titleimage', 'viewcount','scraps', 'owner']
-    initial = {'slug': 'auto-filling-do-not-input'}
-    template_name = 'honeytip/honeytip_form.html'
+    fields = ['title', 'titleimage']
 
     def get_context_data(self, **kwargs):
         context = super(HoneyTipCV, self).get_context_data(**kwargs)
@@ -80,9 +74,10 @@ class HoneyTipCV(LoginRequiredMixin, CreateView):
             self.object = form.save()
             formset.instance = self.object
             formset.save()
-            return redirect('honeytip/honeytip_all.html', pk=self.object.id)
+            return redirect('honeytip:index')
         else:
             return self.render_to_response(self.get_context_data(form=form))
+
 
 
 class HoneyTipDeleteView(LoginRequiredMixin, DeleteView) :

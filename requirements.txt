@@ -3,3 +3,4 @@ Pillow
 django-disqus
 cryptography
 django-hitcount
+django-formset-js

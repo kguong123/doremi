@@ -133,8 +133,8 @@ class RecipeCV(LoginRequiredMixin, CreateView):
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        foodinfo_form = foodinfoInlineFormSet(self.request.POST)
-        recipeinfo_form = RecipeinfoInlineFormSet(self.request.POST)
+        foodinfo_form = foodinfoInlineFormSet(self.request.POST, self.request.FILES)
+        recipeinfo_form = RecipeinfoInlineFormSet(self.request.POST, self.request.FILES)
         if (form.is_valid() and foodinfo_form.is_valid() and
             recipeinfo_form.is_valid()):
             return self.form_valid(form, foodinfo_form, recipeinfo_form)
@@ -147,12 +147,13 @@ class RecipeCV(LoginRequiredMixin, CreateView):
         associated Ingredients and Instructions and then redirects to a
         success page.
         """
+        form.instance.owner = self.request.user
         self.object = form.save()
         foodinfo_form.instance = self.object
         foodinfo_form.save()
         recipeinfo_form.instance = self.object
         recipeinfo_form.save()
-        return redirect('recipe/recipe_all.html', pk=self.object.id)
+        return redirect('recipe:index')
 
     def form_invalid(self, form, foodinfo_form, recipeinfo_form):
         """
