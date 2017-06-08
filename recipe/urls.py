@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^add/$', RecipeCV.as_view(), name='add'),
     url(r'^(?P<slug>[-\w]+)/$', RecipeDV.as_view(), name='recipe_detail'),
     url(r'^(?P<slug>[-\w]+)/delete/$',RecipeDeleteView.as_view(), name="delete"),
+    url(r'^(?P<pk>[0-9]+)/update/$',RecipeUV.as_view(), name="recipe_update"),
 ]

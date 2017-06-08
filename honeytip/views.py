@@ -51,7 +51,6 @@ class PostMixinDetailView(object):
 class HoneyTipDV(PostMixinDetailView, HitCountDetailView) :
     count_hit = True
 
-
 class HoneyTipCV(LoginRequiredMixin, CreateView):
     model = HoneyTip
     fields = ['title', 'titleimage']
@@ -77,6 +76,31 @@ class HoneyTipCV(LoginRequiredMixin, CreateView):
             return redirect('honeytip:index')
         else:
             return self.render_to_response(self.get_context_data(form=form))
+
+
+class HoneyTipUV(LoginRequiredMixin, UpdateView):
+    model = HoneyTip
+    fields = ['title', 'titleimage']
+
+    def get_context_data(self, **kwargs):
+        context = super(HoneyTipUV, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['formset'] = HoneyTipInlineFormSet(self.request.POST, self.request.FILES, instance=self.object)
+        else:
+            context['formset'] = HoneyTipInlineFormSet(instance=self.object)
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['formset']
+        if formset.is_valid():
+            self.object = form.save()
+            formset.instance = self.object
+            formset.save()
+            return redirect(self.object.get_absolute_url())
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
 
 
 

@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^add/$', HoneyTipCV.as_view(), name='add'),
     url(r'^(?P<slug>[-\w]+)/$', HoneyTipDV.as_view(), name='honeytip_detail'),
     url(r'^(?P<pk>[0-9]+)/delete/$',HoneyTipDeleteView.as_view(), name="delete"),
+    url(r'^(?P<pk>[0-9]+)/update/$',HoneyTipUV.as_view(), name="honeytip_update"),
     
 ]

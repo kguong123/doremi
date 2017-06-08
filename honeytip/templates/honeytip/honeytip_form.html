@@ -70,6 +70,8 @@
           {{ formset.management_form }}
 
           {% for form in formset.forms %}
+              {{form.id}}
+              
               {% if forloop.first %}
                   <thead>
                   <tr>
@@ -80,6 +82,7 @@
                   </thead>
               {% endif %}
               <tr class="{% cycle row1 row2 %} formset_row"> 
+
                 <td>
                     <div class="fileinput fileinput-new" data-provides="fileinput" style="width: 25%; margin-right:30px; ">
                     <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
@@ -119,4 +122,5 @@
             prefix: 'contents_set'
         });
     </script>
+    <script type="text/javascript">document.getElementById('id_name').focus();</script>
 {% endblock %}

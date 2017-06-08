@@ -129,7 +129,8 @@
           {% if user.is_authenticated and user == recipe.owner %}
             <center>
               <a href="{% url 'recipe:delete' recipe.slug %}" class="btn btn-primary" role="button">Delete</a>
-              <a href="#" class="btn btn-default" role="button">Update</a>
+              <a href="{% url 'recipe:recipe_update' recipe.id %}" class="btn btn-default" role="button">Update</a>
+            
             </center> 
           {% else %}
               <center>

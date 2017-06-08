@@ -18,11 +18,11 @@ class RecipeinfoForm(ModelForm):
 
 RecipeinfoInlineFormSet = inlineformset_factory(Recipe, Recipeinfo,
     fields = ['image','description'],
-    extra = 1)
+    extra = 2)
 
 foodinfoInlineFormSet = inlineformset_factory(Recipe, Foodinfo,
     fields = ['ingredient', 'quantity'],
-    extra = 1)
+    extra = 2)
 
 
 

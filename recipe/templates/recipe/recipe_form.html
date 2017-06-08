@@ -108,6 +108,7 @@
 {{ foodinfo_form.management_form }}
 
 {% for form in foodinfo_form.forms %}
+  {{form.id}}
     {% if forloop.first %}
         <thead>
         <tr>
@@ -146,8 +147,9 @@
 <fieldset class="aligned">
 <table class="table">
     {{ recipeinfo_form.management_form }}
-
+      
     {% for form in recipeinfo_form.forms %}
+      {{form.id}}
         {% if forloop.first %}
             <thead>
             <tr>

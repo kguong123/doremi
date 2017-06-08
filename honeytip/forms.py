@@ -15,7 +15,7 @@ class ContentsForm(ModelForm):
 
 
 
-HoneyTipInlineFormSet = inlineformset_factory(HoneyTip, Contents, form=ContentsForm, extra=1, can_delete=True)
+HoneyTipInlineFormSet = inlineformset_factory(HoneyTip, Contents, form=ContentsForm, extra=2, can_delete=True)
 
 
 
