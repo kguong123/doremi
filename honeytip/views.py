@@ -22,7 +22,7 @@ from hitcount.views import HitCountDetailView
 
 from .forms import *
 from .models import HoneyTip, Contents
-
+from mypage.models import HoneyTipScrap
 # Create your views here.
 
 
@@ -45,11 +45,12 @@ class PostMixinDetailView(object):
     model = HoneyTip
     def get_context_data(self, **kwargs):
         context = super(PostMixinDetailView, self).get_context_data(**kwargs)
-        context['post_list'] = HoneyTip.objects.all()[:5]
+        context['count'] = HoneyTipScrap.objects.filter(slug=self.kwargs['slug'] , user=self.request.user.id).count()
         return context
 
 class HoneyTipDV(PostMixinDetailView, HitCountDetailView) :
     count_hit = True
+
 
 class HoneyTipCV(LoginRequiredMixin, CreateView):
     model = HoneyTip

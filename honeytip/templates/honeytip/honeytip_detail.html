@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
 <style>
   #comments {
@@ -121,15 +122,20 @@
              <a href="{% url 'honeytip:delete' honeytip.id %}" class="btn btn-primary" role="button">Delete</a>
               <a href="{% url 'honeytip:honeytip_update' honeytip.id %}" class="btn btn-default" role="button">Update</a>
             </center>
-          {% else %}
+          {% elif  user.is_authenticated and user != honeytip.owner and count > 0%}
               <center>
-                  <a href="{% url 'mypage:honeytip_scrap' honeytip.slug %}" class="btn btn-default" role="button">즐겨찾기</a>
+                  <a href="{% url 'mypage:honeytip_scrap' honeytip.slug %}" class="btn btn-default btn-file" role="button"><span class="glyphicon glyphicon-heart"></span> 즐겨찾기 해제</a>
               </center> 
-            
-          {% endif%}
+          {% elif  user.is_authenticated and user != honeytip.owner and count == 0%}
+              <center>
+                  <a href="{% url 'mypage:honeytip_scrap' honeytip.slug %}" class="btn btn-default btn-file" role="button"><span class="glyphicon glyphicon-heart-empty"></span> 즐겨찾기</a>
+              </center> 
+
+          {% endif %}
 
 
           </div>
+              
         </div>
       </div> 
 

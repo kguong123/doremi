@@ -25,7 +25,7 @@ from DjangoApp.views import LoginRequiredMixin
 from hitcount.views import HitCountDetailView
 from .forms import *
 from .models import *
-
+from mypage.models import RecipeScrap
 
 class RecipeLV(ListView) :
     model = Recipe
@@ -65,7 +65,7 @@ class PostMixinDetailView(object):
     model = Recipe
     def get_context_data(self, **kwargs):
         context = super(PostMixinDetailView, self).get_context_data(**kwargs)
-        context['post_list'] = Recipe.objects.all()[:5]
+        context['count'] = RecipeScrap.objects.filter(slug=self.kwargs['slug'] , user=self.request.user.id).count()
         return context
 
 class RecipeDV(PostMixinDetailView, HitCountDetailView) :
