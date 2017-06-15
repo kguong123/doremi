@@ -5,16 +5,9 @@
 {% block content %}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
 
 {% load staticfiles %}
-
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
-<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'css/jasny-bootstrap.min.css' %}" type="text/css">
 
 <div>
@@ -39,7 +32,7 @@
 <div class="col-md-3">
   <h4 class="">레시피 정보</h4>
 </div>
-<fieldset class="aligned">
+<fieldset class="aligned" style="border: 0;">
   <div class="form-group">
     <label for="formGroupExampleInput"> {{ form.title.label_tag }}</label>
     {{ form.title }}
@@ -48,13 +41,18 @@
     <div>
       <label for="formGroupExampleInput2">{{ form.titleimage.label_tag }}</label>
     </div>
-    <div class="fileinput fileinput-new" data-provides="fileinput" style="width: 25%; margin-right:30px; ">
-    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
-    </div>
-    <div>
-        {{form.titleimage}}
-    </div>
-    </div>
+      <div class="fileinput fileinput-new" data-provides="fileinput" style="width: 25%; margin-right:30px; ">
+        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+        </div>
+        <div>
+          <span class="btn btn-default btn-file">
+            <span class="fileinput-new">Select image</span>
+            <span class="fileinput-exists">Change</span>
+             {{form.titleimage}}
+          </span>
+          <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+        </div>
+      </div>
   </div>
 </fieldset>
 
@@ -64,9 +62,9 @@
 
 </div>
 
-
-<fieldset class="aligned">
-      <table class="table">
+<fieldset class="aligned" style="border: 0;">
+<div class="table-responsive">
+      <table class="table table-condensed">
           {{ formset.management_form }}
 
           {% for form in formset.forms %}
@@ -84,11 +82,16 @@
               <tr class="{% cycle row1 row2 %} formset_row"> 
 
                 <td>
-                    <div class="fileinput fileinput-new" data-provides="fileinput" style="width: 25%; margin-right:30px; ">
+                  <div class="fileinput fileinput-new" data-provides="fileinput">
                     <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
                     </div>
                     <div>
-                        {{form.honeyimage}}
+                      <span class="btn btn-default btn-file">
+                        <span class="fileinput-new">Select image</span>
+                        <span class="fileinput-exists">Change</span>
+                         {{form.honeyimage}}
+                      </span>
+                      <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
                     </div>
                   </div>
                 </td>
@@ -101,7 +104,9 @@
               </tr>
           {% endfor %}
       </table>
+  </div>
 </fieldset>
+
       <hr style="border: 0px">
       <center>
         <input class="btn btn-default btn-file" type="Submit" value="Submit"/> 

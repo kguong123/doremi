@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^accounts/register/$', UserCreateView.as_view(), name='register'),
     url(r'^accounts/register/done/$', UserCreateDoneTV.as_view(), name='register_done'),
-    url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^$', HomeView, name='home'),
     
     url(r'^recipe/', include('recipe.urls', namespace='recipe')),
     url(r'^honeytip/', include('honeytip.urls', namespace='honeytip')),

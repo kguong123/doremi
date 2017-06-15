@@ -3,65 +3,86 @@
 {% block title %}post_bstrap_search.html{% endblock %}
 
 {% block content %}
-<div>
-	<h1>Recipe Search Results</h1>
-	<p>Use this area to provide additional information.</p>
-		
-		<div align="right" style="margin-bottom: 15px;">
-			<a href="{% url 'recipe:add' %}" class="btn btn-primary" role="Button">글쓰기</a>
-			<a href="{% url 'recipe:index' %}" class="btn btn-default" role="button">목록으로</a>	
-			<div style="float: left;">
-				<form class="navbar-form" role="search" action="{% url 'recipe:bssearch' %}">
-			        <div class="form-group" style="display:inline;">
-			          <div class="input-group">
-			            <input type="text" class="form-control" name="search" placeholder="search recipe contents">
-			            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-			          </div>
-			        </div>
-				</form>
-			</div>
-		
-		</div>
+<div class="section">       
+	<div class="title-area">
+	    <h2>Recipe List</h2>
+	    <div class="separator separator-danger">✻</div>
+	    <p class="description">레시피 서비스는 오직 로그인한 사람만 게시글 작성과 스크랩 기능을 이용할 수 있습니다. 또한 허니팁은 검색기능을 제공하여, 제목과 게시글 내용, 단어 단위로 검색이 가능합니다.</p>
+	    <a href="{% url 'recipe:add' %}"  class="btn btn-danger btn-fill" role="Button">글쓰기</a>
+	    <a href="{% url 'recipe:index' %}" class="btn btn-default" role="button">목록으로</a>
+		<form class="navbar-form" role="search" action="{% url 'recipe:bssearch' %}">
+	        <div class="form-group" style="display:inline;">
+	          <div class="input-group">
+	            <input type="text" class="form-control" name="search" placeholder="search honeytip contents">
+	            <span class="input-group-addon"><i class="pe-7s-search"></i></span>
+	          </div>
+	        </div>
+		</form>
+	</div>  
+	<hr class="">
+	<ul class="nav nav-pills">
+		<li role="presentation">
+			<a class="nav-link" href="{% url 'recipe:index' %}">최신글 순</a>
+		</li>
+		<li role="presentation">
+			<a class="nav-link" href="{% url 'recipe:scrap_order' %}">스크랩 순</a>
+		</li>
+	</ul>
+	{% if object_list %}
+	<b><i>Search Word({{ search_term }}) - {{ search_count }} posts Found !</i></b>
+	<div class="row">
 
-		<hr class="">
-
-</div>
-
-{% if object_list %}
-	<b><i>Search Word({{ search_term }}) - {{ search_count }} posts Found !</i></b>	   
-	<div class="py-5">
-		<div class="container">
-		  <div class="row">
-				{% for recipe in object_list %}
-				    <div class="col-md-3">
-					    <div class="thumbnail">
-						    <div style="width: auto; height: 250px; overflow: hidden">
-							    <a href="{{ recipe.get_absolute_url }}">
-					            <img style="width:350px;height:350px" src="{{ recipe.titleimage.url }}" />
-					            </a>
-							</div>
-						    <div class="caption" style="height:150px;word-break:break-all; word-wrap:break-word;">
-						      <p>{{ recipe.owner }}</p>
-						      <h4><a href='{{ recipe.get_absolute_url }}'>{{ recipe.title }}</a></h4>
-						      <p>{{ recipe.foodname }}</p>
-						    </div>
-						    <center>
-							    <p>
-							        <a href="#" class="btn btn-primary" role="button">Button</a>
-							        <a href="#" class="btn btn-default" role="button">Button</a>
-								</p>
-						    </center>
-
-					  	</div>
+		{% for recipe in object_list %}
+		    <div class="col-md-3">
+			    <div class="thumbnail">
+				    <div style="width: auto; height: 250px; overflow: hidden">
+					    <a href="{{ recipe.get_absolute_url }}">
+			            <img style="width:350px;height:350px" src="{{ recipe.titleimage.url }}" />
+			            </a>
+					</div>
+				    <div class="caption" style="height:130px;word-break:break-all; word-wrap:break-word;">
+				      <h5 class="description"><a href='{{ recipe.get_absolute_url }}'>{{ recipe.title }}</a></h5>
+				      {{ recipe.foodname }}
 				    </div>
-				{% endfor %}    
-		  </div>
-		</div>    
-	</div>
+					<center>
+						<div class="panel-footer">
+						  	<i class="fa fa-user"></i> {{ recipe.owner }} | 
+						  	<i class="fa fa-heart"></i> {{ recipe.scraps }} | 
+			                <i class="fa fa-clock-o"></i> {{ recipe.cookingtime }} 분 소요
+						</div>
+					</center>
 
-{% elif search_term %}
-<b><i>Search Word({{ search_term }}) - Not Found !</i></b>
-{% endif %}
+			  	</div>
+		    </div>
+		{% endfor %}  
+
+	{% elif search_term %}
+	<b><i>Search Word({{ search_term }}) - Not Found !</i></b>
+	{% endif %}  
+	</div>
+	<center>
+		<nav aria-label="Page navigation">
+			<ul class="pagination">
+				<li>
+				    {% if page_obj.has_previous %}
+				      <a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+				    {% endif %}
+				</li>
+
+				{% for num in page_obj.paginator.page_range %}
+				<li><a href="?page={{ num }}">{{num}}</a></li>
+				{% endfor %}
+
+
+				<li>
+				  {% if page_obj.has_next %}
+				    <a href="?page={{ page_obj.next_page_number }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+				  {% endif %}
+				</li>
+			</ul>
+		</nav>
+	</center>
+</div>
 
 
 {% endblock %}

@@ -61,7 +61,7 @@ def RecipeSV(request, slug) :
 	for i in ck:
 		count=count+1
 	if(count == 0):
-		p = RecipeScrap(slug = slug, user=request.user.id)
+		p = RecipeScrap(date = slug, user=request.user.id)
 		p.save()
 		Recipe.objects.filter(slug=slug).update(scraps=F('scraps') + 1)
 	else:

@@ -13,7 +13,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 
 @python_2_unicode_compatible
 class HoneyTip(models.Model):
-    title = models.CharField('title',max_length=50)
+    title = models.CharField('title',max_length=100)
     slug = models.SlugField('SLUG',unique=True, allow_unicode=True, help_text='one word for title alias.')
     owner = models.ForeignKey(User, null=True)
     titleimage = ThumbnailImageField('대표 사진',upload_to='honeytip/titleiamge/%y/%m/%d')

@@ -2,50 +2,45 @@
 
 {% block content %}
 
-<div>
-	<h1>Randomcooking</h1>
-	<p>지금 당장! 무엇을 먹을지 고민된다면 버튼을 눌러주세요~</p>
-	<hr class="">
 
-</div>
+<div class="section">       
+	<div class="title-area">
+	    <h2>RandomCooking</h2>
+	    <div class="separator separator-danger">✻</div>
+	    <p class="description">지금 당장! 무엇을 먹을지 고민된다면 버튼을 눌러주세요~</p>
+	    <a href="{% url 'randomcooking:random' %}" class="btn btn-danger btn-fill btn-lg" role="Button">지금 뭐먹지?</a>
+	</div>  
+	<div class="col-md-4">
+	</div>
+	{% for recipe in recipes %}
+	    <div class="col-md-4">
+		    <div class="thumbnail">
+			    <div style="width: auto; height: 250px; overflow: hidden">
+				    <a href="{{ recipe.get_absolute_url }}">
+		            <img style="width:350px;height:350px" src="{{ recipe.titleimage.url }}" />
+		            </a>
+				</div>
+			    <div class="caption" style="height:130px;word-break:break-all; word-wrap:break-word;">
+			      <h4 class="description"><a href='{{ recipe.get_absolute_url }}'>{{ recipe.title }}</h4>
+			      {{ recipe.foodname }}
+			    </div>
+				<center>
+					<div class="panel-footer">
+					  	<i class="fa fa-user"></i> {{ recipe.owner }} | 
+					  	<i class="fa fa-heart"></i> {{ recipe.scraps }} | 
+		                <i class="fa fa-clock-o"></i> {{ recipe.cookingtime }} 분 소요
+					</div>
+				</center>
 
-<center>
-		<a href="{% url 'randomcooking:random' %}" class="btn btn-primary" role="Button">지금 뭐먹지?</a>
-		<hr class="" style="border: 0px;">
-</center>
-
+		  	</div>
+	    </div>
+	{% endfor %}    
+	
+	<div class="col-md-4">
+	</div>
 
 	
-
-<div class="col-md-4">
 </div>
-
-{% for recipe in recipes %}
-<div class="col-md-4">
-    <div class="thumbnail">
-	    <div style="width: auto; height: 250px; overflow: hidden">
-		    <a href="{{ recipe.get_absolute_url }}">
-            <img style="width:350px;height:350px" src="{{ recipe.titleimage.url }}" />
-            </a>
-		</div>
-	    <div class="caption" style="height:150px;word-break:break-all; word-wrap:break-word;">
-	      <p>{{ recipe.owner }}</p>
-	      <h4><a href='{{ recipe.get_absolute_url }}'>{{ recipe.title }}</a></h4>
-	      <p>{{ recipe.foodname }}</p>
-	    </div>
-		<div class="panel-footer">
-		  	<span class="glyphicon glyphicon-user"></span> {{ recipe.owner }} &nbsp; | &nbsp;
-		  	<span class="glyphicon glyphicon-heart"></span> {{ recipe.scraps }} &nbsp;| &nbsp;
-            <span class="glyphicon glyphicon-time"></span> {{ recipe.cookingtime }} 분 소요
-		</div>
-
-  	</div>
-</div>
-{% endfor %}  
-  
-<div class="col-md-4">
-</div>
-
 
 
 

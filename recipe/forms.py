@@ -11,9 +11,6 @@ class RecipeForm(ModelForm):
 class RecipeinfoForm(ModelForm):
     class Meta:
         model = Recipeinfo
-        widgets = {
-          'description': Textarea(attrs={'rows':200, 'cols':20}),
-        }
         fields = ['image', 'description']
 
 RecipeinfoInlineFormSet = inlineformset_factory(Recipe, Recipeinfo,

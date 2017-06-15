@@ -1,0 +1,42 @@
+  #comments {
+    float:right;
+
+  }
+
+  #comment-wrapper {
+    position: relative;
+  }
+
+  #commentWrapper { /* required to avoid jumping */
+    left: 450px;
+    position: relative;
+    margin-left: 35px;
+    width:280px;
+  }
+
+  #comment {
+    position: relative;
+    top: 0;
+    margin-top: 20px;
+    border-top: 0px;
+    padding-top: 19px;
+    width:350px;
+
+  }
+
+  #comments ol li {
+    border-top: 0px;
+  }
+
+  #comments ol li:first-child {
+    border-top: 0;
+  }
+
+  #comment.fixed {
+    position: fixed;
+    top: 0;
+  }
+
+  .borderless td, .borderless th {
+    border: none;
+  }

@@ -2,73 +2,72 @@
 
 {% block content %}
 
-<div>
-	<h1>Write List</h1>
-	<p>Use this area to provide additional information.</p>
-		<hr class="" style="border: 0px">
-</div>
-
-
-<ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#home">Recipe</a></li>
-  <li><a data-toggle="tab" href="#menu1">HoneyTip</a></li>
-</ul>
-<br/>
-<div class="tab-content">
-  <div id="home" class="tab-pane fade in active">
-	<div class="row">
-		{% for recipe in recipes %}
-		    <div class="col-md-3">
-			    <div class="thumbnail">
-				    <div style="width: auto; height: 250px; overflow: hidden">
-					    <a href="{{ recipe.get_absolute_url }}">
-			            <img style="width:350px;height:350px" src="{{ recipe.titleimage.url }}" />
-			            </a>
-					</div>
-				    <div class="caption" style="height:150px;word-break:break-all; word-wrap:break-word;">
-				      <p>{{ recipe.owner }}</p>
-				      <h4><a href='{{ recipe.get_absolute_url }}'>{{ recipe.title }}</a></h4>
-				      <p>{{ recipe.foodname }}</p>
-				    </div>
-					<center>
-						<div class="panel-footer">
-						  	<span class="glyphicon glyphicon-user"></span> {{ recipe.owner }} | 
-						  	<span class="glyphicon glyphicon-heart"></span> {{ recipe.scraps }} | 
-			                <span class="glyphicon glyphicon-time"></span> {{ recipe.cookingtime }} 분 소요
-						</div>
-					</center>
-
-			  	</div>
-		    </div>
-		{% endfor %}    
+<div class="section">  
+	<div class="title-area">
+	    <h2>Scrap List</h2>
+	    <div class="separator separator-danger">✻</div>
+	    <p class="description">tab 버튼으로 honeytip, reicpe에서 스크랩한 게시글 목록을 손쉽게 확인할 수 있습니다.</p>
 	</div>
-  </div>
-  <div id="menu1" class="tab-pane fade">
-	<div class="row">
-		{% for honeytip in honeytips %}
-		    <div class="col-md-3">
-			    <div class="thumbnail">
-				    <div style="width: auto; height: 250px; overflow: hidden">
-					    <a href="{{ honeytip.get_absolute_url }}">
-			            <img style="width:350px;height:350px;" src="{{ honeytip.titleimage.url }}" />
-			            </a>
-					</div>
-				    <div class="caption" style="height:100px;word-break:break-all; word-wrap:break-word;">
-				      <h4><a href='{{ honeytip.get_absolute_url }}'>{{ honeytip.title }}</a></h4>
-				    </div>
-					<center>
-						<div class="panel-footer">
-						  	<span class="glyphicon glyphicon-user"></span> {{ honeytip.owner }} | 
-						  	<span class="glyphicon glyphicon-heart"></span> {{ honeytip.scraps }} | 
-			                <span class="glyphicon glyphicon-time"></span> {{ honeytip.create_date|date:"Y m d" }}
+	<ul class="nav nav-tabs">
+	  <li class="active"><a data-toggle="tab" href="#home">Recipe</a></li>
+	  <li><a data-toggle="tab" href="#menu1">HoneyTip</a></li>
+	</ul>
+	<br/>
+	<div class="tab-content">
+	  <div id="home" class="tab-pane fade in active">
+		<div class="row">
+			{% for recipe in recipes %}
+			    <div class="col-md-3">
+				    <div class="thumbnail">
+					    <div style="width: auto; height: 250px; overflow: hidden">
+						    <a href="{{ recipe.get_absolute_url }}">
+				            <img style="width:350px;height:350px" src="{{ recipe.titleimage.url }}" />
+				            </a>
 						</div>
-					</center>
+					    <div class="caption" style="height:150px;word-break:break-all; word-wrap:break-word;">
+					      <h4><a href='{{ recipe.get_absolute_url }}'>{{ recipe.title }}</a></h4>
+					      <p>{{ recipe.foodname }}</p>
+					    </div>
+						<center>
+							<div class="panel-footer">
+							  	<i class="fa fa-user"></i>{{ recipe.owner }} | 
+							  	<i class="fa fa-heart"></i> {{ recipe.scraps }} | 
+				                <i class="fa fa-clock-o"></i> {{ recipe.cookingtime }} 분 소요
+							</div>
+						</center>
 
-			  	</div>
-		    </div>
-		{% endfor %}    
+				  	</div>
+			    </div>
+			{% endfor %}    
+		</div>
+	  </div>
+	  <div id="menu1" class="tab-pane fade">
+		<div class="row">
+			{% for honeytip in honeytips %}
+			    <div class="col-md-3">
+				    <div class="thumbnail">
+					    <div style="width: auto; height: 250px; overflow: hidden">
+						    <a href="{{ honeytip.get_absolute_url }}">
+				            <img style="width:350px;height:350px;" src="{{ honeytip.titleimage.url }}" />
+				            </a>
+						</div>
+					    <div class="caption" style="height:100px;word-break:break-all; word-wrap:break-word;">
+					      <h4><a href='{{ honeytip.get_absolute_url }}'>{{ honeytip.title }}</a></h4>
+					    </div>
+						<center>
+							<div class="panel-footer">
+							  	<i class="fa fa-user"></i> {{ honeytip.owner }} | 
+							  	<i class="fa fa-heart"></i>  {{ honeytip.scraps }} | 
+				                <i class="fa fa-clock-o"></i> {{ honeytip.create_date|date:"Y m d" }}
+							</div>
+						</center>
+
+				  	</div>
+			    </div>
+			{% endfor %}    
+		</div>
+	  </div>
 	</div>
-  </div>
 </div>
 
 {% endblock %}

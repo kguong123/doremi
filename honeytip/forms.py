@@ -1,5 +1,6 @@
 from .models import HoneyTip, Contents
 from django.forms import ModelForm, inlineformset_factory
+from django import forms
 
 
 class HoneyTipForm(ModelForm):
@@ -10,8 +11,7 @@ class HoneyTipForm(ModelForm):
 class ContentsForm(ModelForm):
     class Meta:
         model = Contents
-        exclude = ()   
-
+        exclude = ()
 
 
 

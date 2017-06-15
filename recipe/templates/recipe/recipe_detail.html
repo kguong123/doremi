@@ -5,58 +5,21 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-<style>
-  #comments {
-    float:right;
-
-  }
-
-  #comment-wrapper {
-    position: relative;
-  }
-
-  #commentWrapper { /* required to avoid jumping */
-    left: 450px;
-    position: relative;
-    margin-left: 35px;
-    width:280px;
-  }
-
-  #comment {
-    position: relative;
-    top: 0;
-    margin-top: 20px;
-    border-top: 0px;
-    padding-top: 19px;
-    width:350px;
-
-  }
-
-  #comments ol li {
-    border-top: 0px;
-  }
-
-  #comments ol li:first-child {
-    border-top: 0;
-  }
-
-  #comment.fixed {
-    position: fixed;
-    top: 0;
-  }
-
-  .borderless td, .borderless th {
-    border: none;
-  }
-</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
 {% load staticfiles %}
-<script src="{% static 'js/jquery-1.4.3.min.js' %}"></script>
 <script src="{% static 'js/recipe_detail.js' %}"></script>
-<script src="{% static 'css/recipe_detail.css' %}"></script>
+<script src="{% static 'js/jquery-1.4.3.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/recipe_detail.css' %}" type="text/css">
 
+<script type="text/javascript">
+var count=0;
+
+function button1_click() {
+count++;
+(count%2==0)? document.getElementById("lock").className = "pe-7s-angle-up": document.getElementById("lock").className = "pe-7s-angle-down";
+}
+</script>
 
 <div class="py-5">
   <div class="container">
@@ -65,7 +28,7 @@
         <div class="row">
           <div class="row">
             <div class="col-md-12">
-              <h1>Recipe Details <small>- category</small></h1>
+              <h1>Recipe Details</h1>
             </div>
           </div>
         </div>
@@ -87,36 +50,41 @@
       <div class="col-md-4">
         
           <div class="card-block" style="word-break:break-all; word-wrap:break-word;">
-            <h3 class="card-title">{{ object.title }}</h3>
-            <p class="lead">{{ object.foodname }} </p>
-            <img style="width:250px;height:250px" src="{{ object.titleimage.thumb_url }}" />
+            <center>
+              <h3 class="card-title">{{ object.title }}</h3>
+              <p class="lead">{{ object.foodname }} </p>
+              <img style="width:250px;height:250px" src="{{ object.titleimage.thumb_url }}" />
+            </center>
+
+            <hr class="" style="border: 0px;">
             <div class="table-responsive">          
               <table class="table">
                 <tbody>
                   <tr>
                     <td width="50">{% load staticfiles %}
-                      <img src="{% static 'img/glyphicons-4-user.png' %}" style="width: 20px; height: 20px">
+                      <i class="fa fa-user"></i>
                     </td>
                     <td>작성자</td>
                     <td>{{ object.owner }}</td>
                   </tr>
                   <tr>
                     <td width="50">{% load staticfiles %}
-                      <img src="{% static 'img/glyphicons-55-clock.png' %}" style="width: 20px; height: 20px">
+                      <i class="fa fa-clock-o"></i>
+                      
                     </td>
                     <td>조리시간</td>
                     <td>{{ object.cookingtime }} 분 소요</td>
                   </tr>
                   <tr>
                     <td width="50">{% load staticfiles %}
-                      <img src="{% static 'img/glyphicons-52-eye-open.png' %}" style="width: 20px; height: 15px">
+                      <i class="fa fa-eye"></i>
                     </td>
                     <td>조회수</td>
                     <td>{{ hitcount.total_hits }}</td>
                   </tr>
                   <tr>
                     <td width="50">{% load staticfiles %}
-                      <img src="{% static 'img/glyphicons-20-heart-empty.png' %}" style="width: 20px; height: 20px">
+                      <i class="fa fa-heart"></i>
                     </td>
                     <td>스크랩수</td>
                     <td>{{ object.scraps }}</td>
@@ -143,19 +111,17 @@
             
           {% endif%}
 
-
-
-
-
           </div>
-          <div id="comment">
-            <hr class="">
-            <h3 class="card-title">재료리스트 <small>- {{ object.servings }} 인기준</small> </h3>
-            <ul class="list-group">
-              {% for foodinfo in object.foodinfo_set.all %}
-              <li class="list-group-item">{{ foodinfo.ingredient}} {{ foodinfo.quantity}} </li>
-              {% endfor %}
-            </ul>
+          <div id="demo" class="collapse in">  
+            <div id="comment">
+              <hr class="">
+              <h3 class="card-title">재료리스트 <small>- {{ object.servings }} 인기준</small> </h3>
+              <ul class="list-group">
+                {% for foodinfo in object.foodinfo_set.all %}
+                <li class="list-group-item">{{ foodinfo.ingredient}} {{ foodinfo.quantity}} </li>
+                {% endfor %}
+              </ul>
+            </div>
           </div>
       </div> 
 
@@ -163,6 +129,10 @@
     </div>
   </div>
 </div>
+
+<center>
+<button type="button" class="btn btn-default btn-lg" data-toggle="collapse" data-target="#demo" onclick="button1_click();"><i id ="lock" class="pe-7s-angle-up"></i>접기 | 펼치기</button>
+</center>
 
 <div>
 {% load disqus_tags %}

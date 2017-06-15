@@ -136,7 +136,7 @@ class RecipeCV(LoginRequiredMixin, CreateView):
 
 class RecipeCV(LoginRequiredMixin, CreateView):
     model = Recipe
-    fields = ['title', 'titleimage']
+    fields = ['title', 'titleimage','foodname','servings','cookingtime']
 
     def get_context_data(self, **kwargs):
         context = super(RecipeCV, self).get_context_data(**kwargs)

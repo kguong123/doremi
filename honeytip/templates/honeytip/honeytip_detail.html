@@ -5,54 +5,21 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-<style>
-  #comments {
-    float:right;
-
-  }
-
-  #comment-wrapper {
-    position: relative;
-  }
-
-  #commentWrapper { /* required to avoid jumping */
-    left: 450px;
-    position: relative;
-    margin-left: 35px;
-    width:280px;
-  }
-
-  #comment {
-    position: relative;
-    top: 0;
-    margin-top: 20px;
-    border-top: 0px;
-    padding-top: 19px;
-    width:350px;
-
-  }
-
-  #comments ol li {
-    border-top: 0px;
-  }
-
-  #comments ol li:first-child {
-    border-top: 0;
-  }
-
-  #comment.fixed {
-    position: fixed;
-    top: 0;
-  }
-</style>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
 {% load staticfiles %}
 <script src="{% static 'js/honeytip_detail.js' %}"></script>
 <script src="{% static 'js/jquery-1.4.3.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/honeytip_detail.css' %}" type="text/css">
 
+<script type="text/javascript">
+var count=0;
+
+function button1_click() {
+count++;
+(count%2==0)? document.getElementById("lock").className = "pe-7s-angle-up": document.getElementById("lock").className = "pe-7s-angle-down";
+}
+</script>
 
 <div class="py-5">
   <div class="container">
@@ -61,7 +28,7 @@
         <div class="row">
           <div class="row">
             <div class="col-md-12">
-              <h1>Recipe Details <small>- category</small></h1>
+              <h1>Honeytip Details</h1>
             </div>
           </div>
         </div>
@@ -70,72 +37,74 @@
           <div class="col-md-12" style="word-break:break-all; word-wrap:break-word;">       
             {% for contents in object.contents_set.all %}
               <img class="center-block img-fluid d-block" src="{{ contents.honeyimage.url }}" style = "width: 100%; height: auto;"> 
-              <br>           
+
               <h4>{{ contents.honeydescription}}</h4>
-              <br>
-              <br>
+
             {% endfor %}
           </div>
         </div>
       </div>
       
-      
+    
       <div class="col-md-4">
-        <div id="comment">
-          <div class="card-block" style="word-break:break-all; word-wrap:break-word;">
-            <h3 class="card-title">{{ object.title }}</h3>
-            <center>
-              <img style="width:250px;height:250px" src="{{ object.titleimage.thumb_url }}" />
-            </center>
- 
-            <div class="table-responsive">          
-              <table class="table">
-                <tbody>
-                  <tr>
-                    <td width="50">{% load staticfiles %}
-                      <img src="{% static 'img/glyphicons-4-user.png' %}" style="width: 20px; height: 20px">
-                    </td>
-                    <td>작성자</td>
-                    <td>{{ object.owner }}</td>
-                  </tr>
-                  <tr>
-                    <td width="50">{% load staticfiles %}
-                      <img src="{% static 'img/glyphicons-52-eye-open.png' %}" style="width: 20px; height: 15px">
-                    </td>
-                    <td>조회수</td>
-                    <td>{{ hitcount.total_hits }}</td>
-                  </tr>
-                  <tr>
-                    <td width="50">{% load staticfiles %}
-                      <img src="{% static 'img/glyphicons-20-heart-empty.png' %}" style="width: 20px; height: 20px">
-                    </td>
-                    <td>스크랩수</td>
-                    <td>{{ object.scraps }}</td>
-                  </tr>
+        <div id="demo" class="collapse in">
+          <div id="comment">
+            <hr class="" style="border: 0px">
+            <div class="card-block" style="word-break:break-all; word-wrap:break-word; padding-top: 30px;">
+              <center>           
+                 <h3 class="card-title">{{ object.title }}</h3> 
+                <img style="width:250px;height:250px" src="{{ object.titleimage.thumb_url }}" />
+              </center>
+                <hr class="" style="border: 0px;">
+              <div class="table-responsive">          
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td width="50">{% load staticfiles %}
+                        <i class="fa fa-user"></i>
+                      </td>
+                      <td>작성자</td>
+                      <td>{{ object.owner }}</td>
+                    </tr>
+                    <tr>
+                      <td width="50">{% load staticfiles %}
+                        <i class="fa fa-eye"></i>
+                      </td>
+                      <td>조회수</td>
+                      <td>{{ hitcount.total_hits }}</td>
+                    </tr>
+                    <tr>
+                      <td width="50">{% load staticfiles %}
+                         <i class="fa fa-heart"></i>
+                      </td>
+                      <td>스크랩수</td>
+                      <td>{{ object.scraps }}</td>
+                    </tr>
 
-                </tbody>
-              </table>
-            </div>           
-            
-          {% if user.is_authenticated and user == honeytip.owner %}
-            <center>
-             <a href="{% url 'honeytip:delete' honeytip.id %}" class="btn btn-primary" role="button">Delete</a>
-              <a href="{% url 'honeytip:honeytip_update' honeytip.id %}" class="btn btn-default" role="button">Update</a>
-            </center>
-          {% elif  user.is_authenticated and user != honeytip.owner and count > 0%}
-              <center>
-                  <a href="{% url 'mypage:honeytip_scrap' honeytip.slug %}" class="btn btn-default btn-file" role="button"><span class="glyphicon glyphicon-heart"></span> 즐겨찾기 해제</a>
-              </center> 
-          {% elif  user.is_authenticated and user != honeytip.owner and count == 0%}
-              <center>
-                  <a href="{% url 'mypage:honeytip_scrap' honeytip.slug %}" class="btn btn-default btn-file" role="button"><span class="glyphicon glyphicon-heart-empty"></span> 즐겨찾기</a>
-              </center> 
-
-          {% endif %}
-
-
-          </div>
+                  </tbody>
+                </table>
+              </div>           
               
+            {% if user.is_authenticated and user == honeytip.owner %}
+              <center>
+               <a href="{% url 'honeytip:delete' honeytip.id %}" class="btn btn-primary" role="button">Delete</a>
+                <a href="{% url 'honeytip:honeytip_update' honeytip.id %}" class="btn btn-default" role="button">Update</a>
+              </center>
+            {% elif  user.is_authenticated and user != honeytip.owner and count > 0%}
+                <center>
+                    <a href="{% url 'mypage:honeytip_scrap' honeytip.slug %}" class="btn btn-default btn-file" role="button"><span class="glyphicon glyphicon-heart"></span> 즐겨찾기 해제</a>
+                </center> 
+            {% elif  user.is_authenticated and user != honeytip.owner and count == 0%}
+                <center>
+                    <a href="{% url 'mypage:honeytip_scrap' honeytip.slug %}" class="btn btn-default btn-file" role="button"><span class="glyphicon glyphicon-heart-empty"></span> 즐겨찾기</a>
+                </center> 
+
+            {% endif %}
+
+
+            </div>
+                
+          </div>
         </div>
       </div> 
 
@@ -143,6 +112,13 @@
   </div>
 </div>
 
+<center>
+
+<button type="button" class="btn btn-default btn-lg" data-toggle="collapse" data-target="#demo" onclick="button1_click();"><i id ="lock" class="pe-7s-angle-up"></i>접기 | 펼치기</button>
+</center>
+
+
+<hr class="" style="border: 0px">
 
 <div>
 {% load disqus_tags %}

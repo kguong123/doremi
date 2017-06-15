@@ -1,16 +1,32 @@
 from django.views.generic.base import TemplateView
-
+from django.shortcuts import render
+from django.db.models import F
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.core.urlresolvers import reverse_lazy
-
 from django.contrib.auth.decorators import login_required
-
+from mypage.models import HomeVisitorsRecord
+from django.contrib.auth.models import User
+from recipe.models import Recipe
+from honeytip.models import HoneyTip
+import datetime
 # Create your views here.
 
 #--- TemplateView
-class HomeView(TemplateView):
-    template_name = 'home.html'
+def HomeView(request) :
+	today=datetime.datetime.today()
+	ck = HomeVisitorsRecord.objects.filter(date=today.strftime("%Y-%m-%d")).count()
+	if ck == 0:
+		p = HomeVisitorsRecord(todaycount=1, date=today.strftime("%Y-%m-%d"))
+		p.save()
+	else :
+		HomeVisitorsRecord.objects.filter(date=today.strftime("%Y-%m-%d")).update(todaycount=F('todaycount') + 1)
+	todayvisitors = HomeVisitorsRecord.objects.filter(date=today.strftime("%Y-%m-%d"))
+	Honeytotal = HoneyTip.objects.all().count()
+	recipetotal = Recipe.objects.all().count()
+	total=Honeytotal+recipetotal
+	usercount = User.objects.all().count()
+	return render(request, 'home.html', {'todayvisitors': todayvisitors, 'total': total, 'usercount':usercount})
 
 #--- User Creation
 class UserCreateView(CreateView):

@@ -19,4 +19,5 @@ from delivery.views import *
 
 urlpatterns = [
     url(r'^$', delivery.as_view(), name='index'),
+    url(r'^selectcompany/$',selectcompany, name='company')
 ]
