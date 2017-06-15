@@ -6,42 +6,52 @@
 {% block extrastyle %}{% static "css/forms.css" %}{% endblock %}
 
 {% block content %}
-<div id="content">
-
-    <h1>New User Registration</h1>
-
-    <form method="post" action="."> {% csrf_token %}
-
-    {% if form.errors %}
-    <div class="alert alert-warning">
-      <strong>Warning!</strong> {{form.errors}}
-    </div>
-    {% endif %}
-    
-    <p>Please enter your username etc.</p>
-    
-    <fieldset class="aligned">
-    
-        <div class="form-row">
-            {{ form.username.label_tag }} {{ form.username }}
-        </div>
+<div class="section">       
+    <div class="title-area">
+        <h2>New User Registration</h2>
+        <div class="separator separator-danger">✻</div>
+        <p class="description">간단한 회원정보로도 가입이 가능합니다!
+        <br> 또한 facebook으로도 가입이 가능하오니, 주저하지 마세요 ~</p>
         
-        <div class="form-row">
-            {{ form.password1.label_tag }} {{ form.password1 }}
-        </div>
-        
-        <div class="form-row">
-            {{ form.password2.label_tag }} {{ form.password2 }}
-        </div>
-    
-    </fieldset>
-    
-    <div class="submit-row">
-        <input type="submit" value="Register"/>
-    </div>
-    
-    <script type="text/javascript">document.getElementById("id_username").focus();</script>
-    </form>
 
+        <form method="post" action="."> 
+        {% csrf_token %}
+
+                {% if form.errors %}
+                <div class="alert alert-warning">
+                  <strong>Warning!</strong> {{form.errors}}
+                </div>
+                {% endif %}
+
+                
+                    <div class="form-row">
+                        {{ form.username.label_tag }} {{ form.username }}
+                    </div>
+                    
+                    <div class="form-row">
+                        {{ form.password1.label_tag }} {{ form.password1 }}
+                    </div>
+                    
+                    <div class="form-row">
+                        {{ form.password2.label_tag }} {{ form.password2 }}
+                    </div>
+                    <div class="form-row">
+                        {{ form.email.label_tag }} {{ form.email }}
+                    </div>
+                
+
+                <div class="submit-row">
+                    <input type="submit" class ="btn btn-danger btn-fill btn-md" value="Register"/>
+                </div>
+                
+                <script type="text/javascript">document.getElementById("id_username").focus();
+                </script>
+        </form>
+
+
+
+    </div>
 </div>
+
+
 {% endblock %}

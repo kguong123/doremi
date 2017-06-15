@@ -2,7 +2,7 @@ from django.views.generic.base import TemplateView
 from django.shortcuts import render
 from django.db.models import F
 from django.views.generic.edit import CreateView
-from django.contrib.auth.forms import UserCreationForm
+from .forms import UserCreationForm
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from mypage.models import HomeVisitorsRecord

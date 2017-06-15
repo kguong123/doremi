@@ -6,40 +6,41 @@
 {% block extrastyle %}{% static "css/forms.css" %}{% endblock %}
 
 {% block content %}
-<div id="content">
+<div class="section">       
+    <div class="title-area">
+        <h2>Please Login</h2>
+        <div class="separator separator-danger">✻</div>
+        <p class="description"></p>
+            <form method="post" action="."> 
+    {% csrf_token %}
 
-    <h1>Please Login </h1>
+            {% if form.errors %}
+            <div class="alert alert-warning">
+              <strong>Warning!</strong> {{form.errors}}
+            </div>
+            {% endif %}
+            
+                <div class="form-row col-xs-6">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input type="text" name="username" autofocus="" required="" id="id_username" class="form-control" maxlength="50" placeholder="username">
+                    
+                </div>
+                <div class="form-row col-xs-6">
+                    <i class="fa fa-lock" aria-hidden="true"></i><input type="password" class="form-control" name="password" required="" id="id_password" placeholder="password">
+                </div>
+            
 
-    <form action="." method="post">{% csrf_token %}
+            <div class="submit-row">
+                <input type="submit" class ="btn btn-danger btn-fill btn-md" value="Log In"/>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </div>
 
-    {% if form.errors %}
-    <div class="alert alert-warning">
-      <strong>Warning!</strong> {{form.errors}}
-    </div>
-    {% endif %}
-
-    <p>Please enter your id and password.</p>
-
-    <fieldset class="aligned">
-
-        <div class="form-row">
-            {{ form.username.label_tag }} {{ form.username }}
-        </div>
-    
-        <div class="form-row">
-            {{ form.password.label_tag }} {{ form.password }}
-        </div>
-
-    </fieldset>
-
-    <div class="submit-row">
-        <input type="submit" value="Log In"/>
-        <!-- input type="hidden" name="next" value="/" / -->
-        <input type="hidden" name="next" value="{{ next }}" />
-    </div>
-
-    <script type="text/javascript">document.getElementById('id_username').focus();</script>
+            
+            <script type="text/javascript">document.getElementById("id_username").focus();
+            </script>
     </form>
+    </div>
 
 </div>
+
 {% endblock %}
