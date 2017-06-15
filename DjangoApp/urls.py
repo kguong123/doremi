@@ -1,5 +1,4 @@
 from datetime import datetime
-from .forms import BootstrapAuthenticationForm
 from .views import HomeView
 from .views import UserCreateView, UserCreateDoneTV
 

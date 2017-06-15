@@ -38,7 +38,7 @@ def ScrapLV(request,username) :
 		hcount = hcount+1
 	
 	if (rcount==0 and hcount==0):
-		return render(request, 'mypage/mypage_noscraplist.html', {})
+		return render(request, 'mypage/mypage_scraplist.html', {})
 	elif(rcount ==0 or hcount==0):
 		if (rcount==0):
 			query = reduce(operator.or_, (Q(slug__contains = scrap.slug) for scrap in honytip_slug_list))
@@ -61,7 +61,7 @@ def RecipeSV(request, slug) :
 	for i in ck:
 		count=count+1
 	if(count == 0):
-		p = RecipeScrap(date = slug, user=request.user.id)
+		p = RecipeScrap(slug = slug, user=request.user.id)
 		p.save()
 		Recipe.objects.filter(slug=slug).update(scraps=F('scraps') + 1)
 	else:
