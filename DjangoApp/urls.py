@@ -11,14 +11,13 @@ from django.conf import settings
 
 # Uncomment the next lines to enable the admin:
 
-
-
 urlpatterns = [
     # Examples:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^accounts/register/$', UserCreateView.as_view(), name='register'),
     url(r'^accounts/register/done/$', UserCreateDoneTV.as_view(), name='register_done'),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^$', HomeView, name='home'),
     
     url(r'^recipe/', include('recipe.urls', namespace='recipe')),

@@ -4,3 +4,4 @@ django-disqus
 cryptography
 django-hitcount
 django-formset-js
+social-auth-app-django
