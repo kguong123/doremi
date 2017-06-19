@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
-
+from django.contrib.auth.models import User
 from django.views.generic import ListView, DetailView, TemplateView
 from recipe.models import Recipe, Foodinfo, Recipeinfo
 from honeytip.models import HoneyTip, Contents
@@ -14,6 +14,8 @@ from .models import RecipeScrap, HoneyTipScrap
 from django.db.models import F
 import operator
 from django.db.models import Q
+from django.contrib import messages
+from .forms import *
 
 # Create your views here.
 
@@ -85,3 +87,78 @@ def HoneyTipSV(request,slug) :
 		fb.delete()
 		HoneyTip.objects.filter(slug=slug).update(scraps=F('scraps') - 1)
 	return redirect(request.META['HTTP_REFERER'])
+
+
+class SearchEmail(TemplateView) :
+    template_name = 'mypage/search_email.html'
+
+def FindUsername(request):
+	if request.method == 'POST':
+		form = FindUserNameForm(request.POST)
+		email= request.POST.get('email')
+		if form.is_valid() and User.objects.filter(email=email):
+			entry=User.objects.filter(email=email)
+			return render(request, 'mypage/search_email.html', {'Useremail': entry})
+		else:
+			return render(request, 'mypage/search_email.html', {'form':form})
+	else:
+		form = FindUserNameForm(request.POST)
+		return render(request, 'mypage/search_email.html', {'form':form})
+
+def ChangePw(request, username):
+	if request.method == 'POST':
+		form = ChangePwForm(request.POST)
+		new_password1= request.POST.get('new_password1')
+		new_password2= request.POST.get('new_password2')
+		if form.is_valid() and new_password1 == new_password2:
+			u = User.objects.get(username__exact=username)
+			u.set_password(new_password1)
+			u.save()
+			return  redirect('/accounts/login/')
+		else:
+			return render(request, 'mypage/search_password.html', {'form':form})
+	else:
+		form = ChangePwForm(request.POST)
+		return render(request, 'mypage/search_password.html', {})
+
+
+
+class SearchPassword(TemplateView) :
+    template_name = 'mypage/search_password.html'
+
+def FindPassword(request):
+	if request.method == 'POST':
+		email= request.POST.get('email')
+		username= request.POST.get('username')
+		entry=User.objects.filter(email=email, username=username)
+		form = FindPasswordForm(request.POST)
+		if form.is_valid() and entry.exists():
+			entry=User.objects.filter(email=email)
+			return render(request, 'mypage/search_password.html', {'findpw': entry})
+		else:
+			return render(request, 'mypage/search_password.html', {'form':form})
+	else:
+		form = FindPasswordForm(request.POST)
+		return render(request, 'mypage/search_password.html', {'form':form})
+
+class DeleteConfirm(TemplateView) :
+    template_name = 'mypage/identification.html'
+
+def DeleteUser(request):
+	if request.method == 'POST':
+		user = User.objects.get(username=request.user)
+		password= request.POST.get('password')
+		form = DeleteUserForm(request.POST,user=request.user)
+		if user.check_password(password):
+			user.delete()
+			return render(request, 'mypage/Withdrawal.html', {})
+		else:
+			return render(request, 'mypage/identification.html', {'form':form})
+	else:
+		form = DeleteUserForm(user=request.user)
+		return render(request, 'mypage/identification.html', {})
+
+
+
+class DeleteConfirm(TemplateView) :
+    template_name = 'mypage/identification.html'

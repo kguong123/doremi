@@ -1,0 +1,53 @@
+
+{% extends "base.html" %}
+
+{% block title %}search_email.html{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}{% static "css/forms.css" %}{% endblock %}
+
+{% block content %}
+
+
+<div class="section">       
+    <div class="title-area">
+        <h2>아이디 찾기</h2>
+        <div class="separator separator-danger">✻</div>
+        <p class="description">가입 당시 입력했던 이메일 주소를 입력하세요!</p>
+            <form method="post" action="{% url 'mypage:find_username' %}"> 
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <div class="alert alert-warning">
+              <strong>Warning!</strong> {{form.errors}}
+            </div>
+            {% endif %}
+
+                <div class="form-row col-xs-6">
+                    <input type="email" name="email" required="" placeholder="email : example@abc.com" class="form-control" id="id_email">
+                </div>
+            
+
+            <div class="submit-row">
+                <input type="submit" class ="btn btn-danger btn-fill btn-md" value="아이디 찾기"/>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </div>
+
+            
+            <script type="text/javascript">document.getElementById("id_username").focus();
+            </script>
+        </form>
+
+    </div>
+
+</div>
+
+<center>
+        {% for form in Useremail %}
+
+            <h2> 당신의 아이디는 "{{ form.username }}". </h2>
+            <a href="{% url 'login' %}">로그인하러 가기</a>
+        {% endfor %} 
+
+</center>
+{% endblock %}

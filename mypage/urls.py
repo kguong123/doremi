@@ -23,4 +23,12 @@ urlpatterns = [
     url(r'^recipescrap/(?P<slug>[-\w]+)/$', RecipeSV, name='recipe_scrap'),
     url(r'^honeytipscrap/(?P<slug>[-\w]+)/$', HoneyTipSV, name='honeytip_scrap'),
     url(r'^(?P<username>[-\w]+)/scraplist/$', ScrapLV, name='scrap_list'),
+    url(r'^userconfirm/$', DeleteConfirm.as_view(), name='user_confirm'),
+    url(r'^userdelete/$', DeleteUser, name='user_delete'),
+    url(r'^searchemail/$', SearchEmail.as_view(), name='search_email'),
+    url(r'^findusername/$', FindUsername, name='find_username'),
+    url(r'^searchpassword/$', SearchPassword.as_view(), name='search_password'),
+    url(r'^findpassword/$', FindPassword, name='find_password'),
+    url(r'^(?P<username>[-\w]+)/changepw/$', ChangePw, name='change_pw'),
+
 ]

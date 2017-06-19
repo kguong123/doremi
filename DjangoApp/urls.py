@@ -18,8 +18,7 @@ urlpatterns = [
     url(r'^accounts/register/$', UserCreateView.as_view(), name='register'),
     url(r'^accounts/register/done/$', UserCreateDoneTV.as_view(), name='register_done'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
-    url(r'^$', HomeView, name='home'),
-    
+    url(r'^$', HomeView, name='home'),  
     url(r'^recipe/', include('recipe.urls', namespace='recipe')),
     url(r'^honeytip/', include('honeytip.urls', namespace='honeytip')),
     url(r'^delivery/', include('delivery.urls', namespace='delivery')),
