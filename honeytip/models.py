@@ -53,3 +53,16 @@ class Contents(models.Model):
    
     def __str__(self):
         return self.honeydescription
+
+
+@python_2_unicode_compatible
+class HhoComment(models.Model):
+    honeycomment = models.ForeignKey(HoneyTip, null=True)
+    slug = models.CharField('slug',max_length=100, default='')
+    user = models.CharField('user',max_length=100, default='')
+    comments = models.TextField('comments', null=True)
+    create_date = models.DateTimeField('Create Date', auto_now_add=True, null=True)
+    
+    def __str__(self):
+        return self.comments
+   

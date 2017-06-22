@@ -66,10 +66,26 @@ class PostMixinDetailView(object):
     def get_context_data(self, **kwargs):
         context = super(PostMixinDetailView, self).get_context_data(**kwargs)
         context['count'] = RecipeScrap.objects.filter(slug=self.kwargs['slug'] , user=self.request.user.id).count()
+        context['comments'] = ReComment.objects.filter(slug=self.kwargs['slug'])
+        context['commentscount'] = ReComment.objects.filter(slug=self.kwargs['slug']).count()
         return context
 
 class RecipeDV(PostMixinDetailView, HitCountDetailView) :
     count_hit = True
+
+
+def SaveComments(request, slug):
+    comment = request.POST.get('comment')
+    u = ReComment(slug=slug, user=request.user , comments= comment)
+    u.save()
+    return redirect(request.META['HTTP_REFERER'])
+
+
+def deletecomment(request, pk):
+    fb = ReComment.objects.get(pk=pk)
+    fb.delete()
+    return redirect(request.META['HTTP_REFERER'])
+
 
 '''
 class RecipeCV(LoginRequiredMixin, CreateView):

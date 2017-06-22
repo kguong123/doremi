@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from honeytip.models import HoneyTip, Contents
+from honeytip.models import HoneyTip, Contents, HhoComment
 
 
 class ContentsInline(admin.StackedInline):
@@ -16,6 +16,10 @@ class ContentsAdmin(admin.ModelAdmin):
     list_display = ('title', 'owner')
     prepopulated_fields = {'slug': ('title',)}
 
+
+class HCommentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'slug', 'comments', 'create_date')
+
+
 admin.site.register(HoneyTip, ContentsAdmin)
-
-
+admin.site.register(HhoComment, HCommentAdmin)

@@ -21,7 +21,7 @@ from django.shortcuts import redirect
 from hitcount.views import HitCountDetailView
 
 from .forms import *
-from .models import HoneyTip, Contents
+from .models import HoneyTip, Contents, HhoComment
 from mypage.models import HoneyTipScrap
 # Create your views here.
 
@@ -46,11 +46,24 @@ class PostMixinDetailView(object):
     def get_context_data(self, **kwargs):
         context = super(PostMixinDetailView, self).get_context_data(**kwargs)
         context['count'] = HoneyTipScrap.objects.filter(slug=self.kwargs['slug'] , user=self.request.user.id).count()
+        context['comments'] = HhoComment.objects.filter(slug=self.kwargs['slug'])
+        context['commentscount'] = HhoComment.objects.filter(slug=self.kwargs['slug']).count()
         return context
 
 class HoneyTipDV(PostMixinDetailView, HitCountDetailView) :
     count_hit = True
 
+def SaveComments(request, slug):
+    comment = request.POST.get('comment')
+    u = HhoComment(slug=slug, user=request.user , comments= comment)
+    u.save()
+    return redirect(request.META['HTTP_REFERER'])
+
+
+def deletecomment(request, pk):
+    fb = HhoComment.objects.get(pk=pk)
+    fb.delete()
+    return redirect(request.META['HTTP_REFERER'])
 
 class HoneyTipCV(LoginRequiredMixin, CreateView):
     model = HoneyTip

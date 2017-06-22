@@ -19,6 +19,11 @@ function button1_click() {
 count++;
 (count%2==0)? document.getElementById("lock").className = "pe-7s-angle-up": document.getElementById("lock").className = "pe-7s-angle-down";
 }
+
+function button2_click() {
+count++;
+(count%2==0)? document.getElementById("block").className = "pe-7s-angle-up": document.getElementById("block").className = "pe-7s-angle-down";
+}
 </script>
 
 <div class="py-5">
@@ -43,6 +48,9 @@ count++;
             {% endfor %}
           </div>
         </div>
+        <center>
+            <button type="button" class="btn btn-default btn-lg" data-toggle="collapse" data-target="#demo" onclick="button1_click();"><i id ="lock" class="pe-7s-angle-up"></i>접기 | 펼치기</button>
+        </center>
       </div>
       
     
@@ -112,17 +120,58 @@ count++;
   </div>
 </div>
 
-<center>
-
-<button type="button" class="btn btn-default btn-lg" data-toggle="collapse" data-target="#demo" onclick="button1_click();"><i id ="lock" class="pe-7s-angle-up"></i>접기 | 펼치기</button>
-</center>
 
 
-<hr class="" style="border: 0px">
+
+<hr class="" >
+
 
 <div>
-{% load disqus_tags %}
-{% disqus_show_comments %}
+    <form class="navbar-form" method="post" action="{% url 'honeytip:savecomment' honeytip.slug %}"> {% csrf_token %}               
+            <center>
+              <label for="comment">{{ request.user.username }} Comment:</label>
+              
+              <textarea class="form-control" rows="3" id="comment" name = "comment" style="width: 85%;">
+              </textarea>
+
+            
+            <input type="submit" class ="btn btn-danger btn-fill btn-md" value="댓글 달기"/>
+            </center>
+    </form>
+</div>
+
+
+<hr class="" >
+<div class="col-md-12">
+<a  class="btn btn-default btn-lg" data-toggle="collapse" data-target="#Comment" onclick="button2_click();"><i id ="block" class="pe-7s-angle-up"></i>{{commentscount}} 댓글보기</a>
+<hr class="" >
+
+
+
+<div id="Comment" class="collapse">
+{% for comment in comments %}
+ <div class="col-md-2" style = " font-size:1.4em;  font: bold;">
+ {{ comment.user}}
+  </div>
+  <div class="col-md-10">
+     {{ comment.create_date}}
+
+  {% if request.user.username  == comment.user %}
+      <a href="{% url 'honeytip:deletecomment' comment.id %}">삭제</a>
+  {% endif %}
+
+
+  </div>
+  <br>
+  <div class="col-md-12">
+  <h2>{{ comment.comments}}</h2>
+  
+
+    <hr class="" >
+  </div>
+
+{% endfor %}
+
 </div>
 
 {% endblock %}

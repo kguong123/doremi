@@ -66,3 +66,15 @@ class Recipeinfo(models.Model):
    
     def __str__(self):
         return self.description
+
+@python_2_unicode_compatible
+class ReComment(models.Model):
+    Recipecomment = models.ForeignKey(Recipe, null=True)
+    slug = models.CharField('slug',max_length=100, default='')
+    user = models.CharField('user',max_length=100, default='')
+    comments = models.TextField('comments', null=True)
+    create_date = models.DateTimeField('Create Date', auto_now_add=True, null=True)
+    
+    def __str__(self):
+        return self.comments
+   
