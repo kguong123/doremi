@@ -24,7 +24,7 @@ class ThumbnailImageFieldFile(ImageFieldFile):
 
         size = (128, 128)
         img.thumbnail(size, Image.ANTIALIAS)
-        background = Image.new('RGBA', size, (255, 255, 255, 0))
+        background = Image.new('RGB', size, (255, 255, 255, 0))
         background.paste(
             img, ( int((size[0] - img.size[0]) / 2), int((size[1] - img.size[1]) / 2) ) )
         background.save(self.thumb_path, 'JPEG')
